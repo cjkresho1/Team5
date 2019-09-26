@@ -1,3 +1,4 @@
+import java.util.Comparator;
 import java.util.LinkedList;
 
 public class Warehouse 
@@ -56,19 +57,59 @@ public class Warehouse
 	
 	public String[] sortName()
 	{
-		//TODO return a String[] of all the BikeParts
-		//CHARLIE IS DOING THIS
+		String[] val = new String[parts.size()];
 		
-		return null;
+		
+		/* This sorts the warehouse inventory based on Name. This is accomplished by 
+		 * using the built in .sort(Comparator<T>) method. The Comparator<BikePart>
+		 * passed to the method is a custom, overridden Comparator that is designed 
+		 * to compare the Names.
+		 */
+		parts.sort(new Comparator<BikePart>() 
+		{
+			@Override
+			public int compare(BikePart b1, BikePart b2)
+			{
+				return b1.getName().compareTo(b2.getName());
+			}
+		}	
+		);
+		
+		for (int i = 0; i > parts.size(); i++)
+		{
+			val[i] = parts.get(i).toString();
+		}
+		
+		return val;
 	}
 	
 	
 	public String[] sortNumber()
 	{
-		//TODO return a String[] of all the BikeParts
-		//CHARLIE IS DOING THIS
+String[] val = new String[parts.size()];
 		
-		return null;
+		
+		/* This sorts the warehouse inventory based on PartNumber. This is accomplished 
+		 * by using the built in .sort(Comparator<T>) method. The 
+		 * Comparator<BikePart> passed to the method is a custom, overridden 
+		 * Comparator that is designed to compare the Names.
+		 */
+		parts.sort(new Comparator<BikePart>() 
+		{
+			@Override
+			public int compare(BikePart b1, BikePart b2)
+			{
+				return b1.getNum() - b2.getNum();
+			}
+		}	
+		);
+		
+		for (int i = 0; i > parts.size(); i++)
+		{
+			val[i] = parts.get(i).toString();
+		}
+		
+		return val;
 	}
 	
 	public void quit(String file)
