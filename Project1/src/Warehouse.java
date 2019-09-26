@@ -86,7 +86,7 @@ public class Warehouse
 	
 	public String[] sortNumber()
 	{
-String[] val = new String[parts.size()];
+		String[] val = new String[parts.size()];
 		
 		
 		/* This sorts the warehouse inventory based on PartNumber. This is accomplished 
