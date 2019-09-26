@@ -20,13 +20,18 @@ public class BikePart
 	
 	/**
 	 * @return A string representation of the bike part:
-	 * 
+	 * 	partName,partNumber,listPrice,salePrice,onSale,quantity
 	 */
 	public String toString()
 	{
-		//TODO Charlie is doing this
+		String val = String.format("%s,%d,%.2f,%.2f,", name, num, price,
+				salePrice);
 		
-		return "";
+		if (onSale)
+		{
+			return val + "true," + quantity;
+		}
+		return val + "false," + quantity;
 	}
 
 	
