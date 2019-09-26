@@ -1,5 +1,8 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 public class Warehouse 
 {
@@ -13,7 +16,31 @@ public class Warehouse
 	public Warehouse(String dbFile)
 	{
 		parts = new LinkedList<BikePart>();
-		parseFile(dbFile);
+		File file = new File(dbFile);
+		
+		if (file.exists())
+		{
+			try 
+			{
+				Scanner scan = new Scanner(file);
+				while(scan.hasNextLine())
+				{
+					String temp = scan.nextLine();
+					String[] data = temp.split(",");
+					
+					parts.add(new BikePart(data[0], Integer.parseInt(data[1]), 
+							Double.parseDouble(data[2]), Double.parseDouble(data[3]), 
+							Boolean.getBoolean(data[4]), Integer.parseInt(data[5])));
+				}
+			} 
+			catch (FileNotFoundException e) 
+			{
+				System.out.print("HOW DID YOU DO THIS");
+				System.exit(1);
+				//THIS SHOULD NEVER EVER HAPPEN BUT IF IT DOES...HOW?
+			}
+			
+		}
 	}
 	
 	public boolean read(String file)
