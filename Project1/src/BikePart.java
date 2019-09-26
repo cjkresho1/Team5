@@ -19,6 +19,26 @@ public class BikePart
 	}
 	
 	/**
+	 * Creates a new custom BikePart
+	 * @param name the name of the bike part
+	 * @param num the part number
+	 * @param listPrice the price the part is sold for
+	 * @param salePrice the price to produce the part
+	 * @param isBeingSold true if the part is on sale, false otherwise
+	 * @param quantity the number of parts being stored
+	 */
+	public BikePart(String name, int num, double listPrice, double salePrice, 
+			boolean isBeingSold, int quantity)
+	{
+		this.name = name;
+		this.num = num;
+		this.price = listPrice;
+		this.salePrice = salePrice;
+		this.onSale = isBeingSold;
+		this.quantity = quantity;
+	}
+	
+	/**
 	 * @return A string representation of the bike part:
 	 * 	partName,partNumber,listPrice,salePrice,onSale,quantity
 	 */
