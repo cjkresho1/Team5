@@ -54,14 +54,21 @@ public class Warehouse
 		return "";
 	}
 	
-	public void sortName()
+	public String[] sortName()
 	{
-		//TODO display all parts alphanumerically by partName
+		//TODO return a String[] of all the BikeParts
+		//CHARLIE IS DOING THIS
+		
+		return null;
 	}
 	
-	public void sortNumber()
+	
+	public String[] sortNumber()
 	{
-		//TODO display all parts numerically by partNumber
+		//TODO return a String[] of all the BikeParts
+		//CHARLIE IS DOING THIS
+		
+		return null;
 	}
 	
 	public void quit(String file)

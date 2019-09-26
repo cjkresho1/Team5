@@ -17,6 +17,17 @@ public class BikePart
 		onSale = false;
 		quantity = -1;
 	}
+	
+	/**
+	 * @return A string representation of the bike part:
+	 * 
+	 */
+	public String toString()
+	{
+		//TODO Charlie is doing this
+		
+		return "";
+	}
 
 	
 	/**
