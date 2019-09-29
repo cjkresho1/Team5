@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -46,9 +47,24 @@ public class Warehouse {
 
 	public boolean enter(String info) {
 		/*
-		 * TODO parse part info, and add part to parts database. If part already exists,
-		 * update existing one.
+		 * TODO add a return value corresponding to success or failure
 		 */
+		String[] partInfo = info.split(",");
+
+		BikePart newPart = new BikePart(partInfo[0], Integer.parseInt(partInfo[1]), Double.parseDouble(partInfo[2]),
+				Double.parseDouble(partInfo[3]), Boolean.parseBoolean(partInfo[4]), Integer.parseInt(partInfo[5]));
+		
+		boolean exists = false;
+		
+		for (int i = 0; i<parts.size(); i++) {
+			if (newPart.getNum()==parts.get(i).getNum()) {
+				parts.set(i, newPart);
+				exists = true;
+			}
+		}
+		if (exists==false) {
+			parts.add(newPart);
+		}
 
 		return false;
 	}
@@ -58,7 +74,7 @@ public class Warehouse {
 		for (int i = 0; i < parts.size(); i++) {
 			if (partNum == parts.get(i).getNum()) {
 				partInfo = parts.get(i).getName() + " " + parts.get(i).getPrice() + " " + parts.get(i).isOnSale() + " ";
-				parts.get(i).setQuantity(parts.get(i).getQuantity()-1);
+				parts.get(i).setQuantity(parts.get(i).getQuantity() - 1);
 			}
 		}
 		if (partInfo == null) {
