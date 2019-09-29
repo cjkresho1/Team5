@@ -8,21 +8,27 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedWriter;
 
-public class Warehouse {
+public class Warehouse 
+{
 	private LinkedList<BikePart> parts;
 
-	public Warehouse() {
+	public Warehouse() 
+	{
 		parts = new LinkedList<BikePart>();
 	}
 
-	public Warehouse(String dbFile) {
+	public Warehouse(String dbFile) 
+	{
 		parts = new LinkedList<BikePart>();
 		File file = new File(dbFile);
 
-		if (file.exists()) {
-			try {
+		if (file.exists()) 
+		{
+			try 
+			{
 				Scanner scan = new Scanner(file);
-				while (scan.hasNextLine()) {
+				while (scan.hasNextLine()) 
+				{
 					String temp = scan.nextLine();
 					String[] data = temp.split(",");
 
@@ -30,38 +36,47 @@ public class Warehouse {
 							Double.parseDouble(data[3]), Boolean.getBoolean(data[4]), Integer.parseInt(data[5])));
 				}
 				scan.close();
-			} catch (FileNotFoundException e) {
+			} 
+			catch (FileNotFoundException e) 
+			{
 				System.out.print("HOW DID YOU DO THIS");
 				System.exit(1);
 				// THIS SHOULD NEVER EVER HAPPEN BUT IF IT DOES...HOW?
 			}
-
 		}
 	}
 
-	public boolean read(String invFile) {
-		/*
-		 * TODO add a return value that makes sense, not sure what to go for.
-		 */
+	public boolean read(String invFile) 
+	{
 		File file = new File(invFile);
-		try {
+		try 
+		{
 			Scanner scan = new Scanner(file);
-			while (scan.hasNextLine()) {
+			while (scan.hasNextLine()) 
+			{
 				String temp = scan.nextLine();
 				String[] data = temp.split(",");
 				String partName = data[0];
 				
 				int i = 0;
-				while (i < parts.size()){
-					if(parts.get(i).getName().equals(partName)) {
+				while (i < parts.size())
+				{
+					if(parts.get(i).getName().equals(partName)) 
+					{
 						parts.get(i).setQuantity((parts.get(i).getQuantity())+Integer.parseInt(data[5]));
 						i = parts.size();
-					} else {
-						if (i == (parts.size() - 1)) {
+						break;
+					} 
+					else 
+					{
+						if (i == (parts.size() - 1)) 
+						{
 							parts.add(new BikePart(data[0], Integer.parseInt(data[1]), Double.parseDouble(data[2]),
 									Double.parseDouble(data[3]), Boolean.getBoolean(data[4]), Integer.parseInt(data[5])));
 							i++;
-						} else {
+						} 
+						else 
+						{
 							i++;
 						}
 					}
@@ -69,18 +84,18 @@ public class Warehouse {
 				scan.close();
 				
 			}
-		} catch (FileNotFoundException e) {
+		} 
+		catch (FileNotFoundException e) 
+		{
 			System.out.print("Please enter a valid file name.");
-			System.exit(1);
+			return false;
 		}
 		
-		return false;
+		return true;
 	}
 
 	public boolean enter(String info) {
-		/*
-		 * TODO add a return value corresponding to success or failure
-		 */
+		
 		String[] partInfo = info.split(",");
 
 		BikePart newPart = new BikePart(partInfo[0], Integer.parseInt(partInfo[1]), Double.parseDouble(partInfo[2]),
@@ -88,33 +103,43 @@ public class Warehouse {
 		
 		boolean exists = false;
 		
-		for (int i = 0; i<parts.size(); i++) {
-			if (newPart.getNum()==parts.get(i).getNum()) {
-				parts.set(i, newPart);
+		for (int i = 0; i < parts.size(); i++) 
+		{
+			if (newPart.getNum()==parts.get(i).getNum()) 
+			{
+				parts.get(i).setQuantity((parts.get(i).getQuantity()) + newPart.getQuantity());
+				i = parts.size();
 				exists = true;
 			}
 		}
-		if (exists==false) {
+		if (!exists) 
+		{
 			parts.add(newPart);
 		}
 
-		return false;
+		return exists;
 	}
 
-	public String sell(int partNum) {
-		String partInfo = null;
-		for (int i = 0; i < parts.size(); i++) {
-			if (partNum == parts.get(i).getNum()) {
-				partInfo = parts.get(i).getName() + " " + parts.get(i).getPrice() + " " + parts.get(i).isOnSale() + " ";
+	public String sell(int partNum) 
+	{
+		String partInfo = "";
+		for (int i = 0; i < parts.size(); i++) 
+		{
+			if (partNum == parts.get(i).getNum()) 
+			{
+				partInfo = parts.get(i).getName() + " - $" + parts.get(i).getPrice();
+				if (parts.get(i).isOnSale())
+				{
+					partInfo = partInfo + ", This part is on sale";
+				}
+				else
+				{
+					partInfo = partInfo + ", This part is not on sale";
+				}
 				parts.get(i).setQuantity(parts.get(i).getQuantity() - 1);
+				i = parts.size();
 			}
 		}
-		if (partInfo == null) {
-			partInfo = "";
-		}
-		/*
-		 * TODO format partInfo and add time of sale to end
-		 */
 
 		return partInfo;
 	}
@@ -124,19 +149,20 @@ public class Warehouse {
 	 * TODO make sure partInfo is formatted acceptably
 	 */
 	{
-		String partInfo = null;
-		for (int i = 0; i < parts.size(); i++) {
-			if (parts.get(i).getName() == partName) {
-				partInfo = partName + " " + parts.get(i).getPrice();
+		String partInfo = "";
+		for (int i = 0; i < parts.size(); i++) 
+		{
+			if (parts.get(i).getName() == partName) 
+			{
+				partInfo = partName + " - $" + parts.get(i).getPrice();
+				i = parts.size();
 			}
-		}
-		if (partInfo == null) {
-			partInfo = "";
 		}
 		return partInfo;
 	}
 
-	public String[] sortName() {
+	public String[] sortName() 
+	{
 		String[] val = new String[parts.size()];
 
 		/*
@@ -145,21 +171,25 @@ public class Warehouse {
 		 * passed to the method is a custom, overridden Comparator that is designed to
 		 * compare the Names.
 		 */
-		parts.sort(new Comparator<BikePart>() {
+		parts.sort(new Comparator<BikePart>() 
+		{
 			@Override
-			public int compare(BikePart b1, BikePart b2) {
+			public int compare(BikePart b1, BikePart b2)
+			{
 				return b1.getName().compareTo(b2.getName());
 			}
 		});
 
-		for (int i = 0; i > parts.size(); i++) {
+		for (int i = 0; i > parts.size(); i++) 
+		{
 			val[i] = parts.get(i).toString();
 		}
 
 		return val;
 	}
 
-	public String[] sortNumber() {
+	public String[] sortNumber() 
+	{
 		String[] val = new String[parts.size()];
 
 		/*
@@ -168,14 +198,17 @@ public class Warehouse {
 		 * passed to the method is a custom, overridden Comparator that is designed to
 		 * compare the Names.
 		 */
-		parts.sort(new Comparator<BikePart>() {
+		parts.sort(new Comparator<BikePart>() 
+		{
 			@Override
-			public int compare(BikePart b1, BikePart b2) {
+			public int compare(BikePart b1, BikePart b2) 
+			{
 				return b1.getNum() - b2.getNum();
 			}
 		});
 
-		for (int i = 0; i > parts.size(); i++) {
+		for (int i = 0; i > parts.size(); i++) 
+		{
 			val[i] = parts.get(i).toString();
 		}
 
@@ -191,6 +224,7 @@ public class Warehouse {
 		 * doesn't quit
 		 */
 		File oldDB = new File(file);
+		if (oldDB.exists())
 		oldDB.delete();
 		File newDB = new File(file);		
 		
@@ -211,14 +245,5 @@ public class Warehouse {
 			System.out.println("Please enter correct file name.");
 			System.exit(1);
 		}
-	}
-
-	private boolean parseFile(String file) {
-		/*
-		 * TODO use file to update parts database. Create new entries, and update
-		 * existing ones.
-		 */
-
-		return false;
 	}
 }
