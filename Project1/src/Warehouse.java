@@ -4,6 +4,9 @@ import java.lang.reflect.Array;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.BufferedWriter;
 
 public class Warehouse {
 	private LinkedList<BikePart> parts;
@@ -182,9 +185,32 @@ public class Warehouse {
 	public void quit(String file) {
 
 		/*
-		 * TODO update file to reflect current warehouse database. If file exists,
-		 * delete content and overwrite.
+		 * This method deletes the current Warehouse file and then creates a new one
+		 * with the updated part info based on everything the user has given it so
+		 * far. TODO probably change the system.exit catch error to something that
+		 * doesn't quit
 		 */
+		File oldDB = new File(file);
+		oldDB.delete();
+		File newDB = new File(file);		
+		
+		try {
+			
+			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(newDB));
+			
+			for (int i = 0; i < parts.size(); i++) {
+				BikePart tempPart = parts.get(i);
+				String partInfo = tempPart.toString();
+				bufferedWriter.write(partInfo);
+				bufferedWriter.newLine();
+			}			
+			
+			bufferedWriter.close();
+			
+		} catch (IOException e) {
+			System.out.println("Please enter correct file name.");
+			System.exit(1);
+		}
 	}
 
 	private boolean parseFile(String file) {
