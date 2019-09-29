@@ -36,12 +36,41 @@ public class Warehouse {
 		}
 	}
 
-	public boolean read(String file) {
+	public boolean read(String invFile) {
 		/*
-		 * TODO use file to update parts database. Create new entries, and update
-		 * existing ones. Quantity are additive.
+		 * TODO add a return value that makes sense, not sure what to go for.
 		 */
-
+		File file = new File(invFile);
+		try {
+			Scanner scan = new Scanner(file);
+			while (scan.hasNextLine()) {
+				String temp = scan.nextLine();
+				String[] data = temp.split(",");
+				String partName = data[0];
+				
+				int i = 0;
+				while (i < parts.size()){
+					if(parts.get(i).getName().equals(partName)) {
+						parts.get(i).setQuantity((parts.get(i).getQuantity())+Integer.parseInt(data[5]));
+						i = parts.size();
+					} else {
+						if (i == (parts.size() - 1)) {
+							parts.add(new BikePart(data[0], Integer.parseInt(data[1]), Double.parseDouble(data[2]),
+									Double.parseDouble(data[3]), Boolean.getBoolean(data[4]), Integer.parseInt(data[5])));
+							i++;
+						} else {
+							i++;
+						}
+					}
+				}
+				scan.close();
+				
+			}
+		} catch (FileNotFoundException e) {
+			System.out.print("Please enter a valid file name.");
+			System.exit(1);
+		}
+		
 		return false;
 	}
 
