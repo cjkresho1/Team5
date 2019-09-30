@@ -11,15 +11,19 @@ public class Runner
 	                                         "SortName",
 	                                         "SortNumber",
 	                                         "Quit"};
+	private static final String WAREHOUSE_DB = "warehouseDB.txt";
 	
+	/**
+	 * Main method of the program. Loops over user input and output.
+	 * @param args CMD line arguments
+	 */
 	public static void main(String[] args)
 	{
 		//create new Warehouse from database file
-		Warehouse warehouse = new Warehouse("warehouseDB.txt");
+		Warehouse warehouse = new Warehouse(WAREHOUSE_DB);
 		Scanner scan = new Scanner(System.in);
+		
 		//loop over user I/O process
-		
-		
 		while(true)
 		{
 			printOptions();
@@ -64,7 +68,7 @@ public class Runner
 				}
 				break;
 			case 6: //Quit
-				warehouse.quit("warehouseDB.txt");
+				warehouse.quit(WAREHOUSE_DB);
 				scan.close();
 				System.exit(0);
 				break;
@@ -74,6 +78,9 @@ public class Runner
 		}
 	}
 	
+	/**
+	 * Helper method to print out the user options.
+	 */
 	private static void printOptions()
 	{
 		System.out.println("Please select your option from the following "
@@ -88,6 +95,11 @@ public class Runner
 		System.out.println("Enter your choice:");
 	}
 	
+	/**
+	 * Helper method to manage user selection
+	 * @param val string containing the user selection
+	 * @return int representation of the user selection. -1 if not a valid input
+	 */
 	private static int getChoice(String val)
 	{
 		for (int i = 0; i < CHOICES.length; i++)

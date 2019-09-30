@@ -8,6 +8,10 @@ public class BikePart
 	private boolean onSale;
 	private int quantity;
 	
+	/*
+	 * Creates a new, empty BikePart. Should never be used unless values are to 
+	 * be set right after.
+	 */
 	public BikePart()
 	{
 		name = "";
