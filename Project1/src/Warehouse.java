@@ -80,10 +80,9 @@ public class Warehouse
 							i++;
 						}
 					}
-				}
-				scan.close();
-				
+				}	
 			}
+			scan.close();
 		} 
 		catch (FileNotFoundException e) 
 		{
@@ -152,7 +151,7 @@ public class Warehouse
 		String partInfo = "";
 		for (int i = 0; i < parts.size(); i++) 
 		{
-			if (parts.get(i).getName() == partName) 
+			if (parts.get(i).getName().equals(partName)) 
 			{
 				partInfo = partName + " - $" + parts.get(i).getPrice();
 				i = parts.size();
@@ -176,11 +175,11 @@ public class Warehouse
 			@Override
 			public int compare(BikePart b1, BikePart b2)
 			{
-				return b1.getName().compareTo(b2.getName());
+				return b1.getName().compareToIgnoreCase(b2.getName());
 			}
 		});
 
-		for (int i = 0; i > parts.size(); i++) 
+		for (int i = 0; i < parts.size(); i++) 
 		{
 			val[i] = parts.get(i).toString();
 		}
@@ -207,7 +206,7 @@ public class Warehouse
 			}
 		});
 
-		for (int i = 0; i > parts.size(); i++) 
+		for (int i = 0; i < parts.size(); i++) 
 		{
 			val[i] = parts.get(i).toString();
 		}

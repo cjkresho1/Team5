@@ -88,11 +88,12 @@ public class BikePart
 	}
 
 	/**
-	 * @return the price
+	 * @return the price, or the sale price if onSale is true
 	 */
 	public double getPrice()
 	{
-		return price;
+		//Ternary operator. Returns the proper price
+		return (onSale) ? salePrice : price;
 	}
 
 	/**
@@ -101,14 +102,6 @@ public class BikePart
 	public void setPrice(double price)
 	{
 		this.price = price;
-	}
-
-	/**
-	 * @return the salePrice
-	 */
-	public double getSalePrice()
-	{
-		return salePrice;
 	}
 
 	/**

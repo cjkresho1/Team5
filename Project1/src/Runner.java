@@ -14,10 +14,10 @@ public class Runner
 	
 	public static void main(String[] args)
 	{
-		//TODO create new Warehouse from database file
+		//create new Warehouse from database file
 		Warehouse warehouse = new Warehouse("warehouseDB.txt");
 		Scanner scan = new Scanner(System.in);
-		//TODO loop over user I/O process
+		//loop over user I/O process
 		
 		
 		while(true)
@@ -27,15 +27,15 @@ public class Runner
 			
 			switch(choice)
 			{
-			case 1: //Read
+			case 0: //Read
 				System.out.println("Please enter a filename for delivery: ");
 				warehouse.read(scan.next());
 				break;
-			case 2: //Enter
+			case 1: //Enter
 				System.out.println("Please enter a part:");
 				warehouse.enter(scan.next());
 				break;
-			case 3: //Sell
+			case 2: //Sell
 				System.out.println("Please enter a party number: ");
 				String temp = warehouse.sell(scan.nextInt());
 				if (!temp.contentEquals(""))
@@ -45,33 +45,33 @@ public class Runner
 					System.out.println("Product sold at: " + dtf.format(LocalDateTime.now()));
 				}
 				break;
-			case 4: //Display
+			case 3: //Display
 				System.out.println("Please enter the part name: ");
 				System.out.println(warehouse.display(scan.next()));
 				break;
-			case 5: //SortName
+			case 4: //SortName
 				String[] tempArray = warehouse.sortName();
 				for (int i = 0; i < tempArray.length; i++)
 				{
 					System.out.println(tempArray[i]);
 				}
 				break;
-			case 6: //SortNumber
-				String[] numberArray = warehouse.sortName();
+			case 5: //SortNumber
+				String[] numberArray = warehouse.sortNumber();
 				for (int i = 0; i < numberArray.length; i++)
 				{
 					System.out.println(numberArray[i]);
 				}
 				break;
-			case 7: //Quit
+			case 6: //Quit
 				warehouse.quit("warehouseDB.txt");
+				scan.close();
+				System.exit(0);
 				break;
 			default:
 				System.out.println("Invalid input, please try again");
 			}
-			
 		}
-		//TODO update database file and exit
 	}
 	
 	private static void printOptions()
