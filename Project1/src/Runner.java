@@ -48,6 +48,10 @@ public class Runner
 					DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 					System.out.println("Product sold at: " + dtf.format(LocalDateTime.now()));
 				}
+				else
+				{
+					System.out.println("The part could not be found");
+				}
 				break;
 			case 3: //Display
 				System.out.println("Please enter the part name: ");
