@@ -2,6 +2,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
+ * Simulates a network of a primary warehouse, and a fleet of vans.
  * @author Group5
  */
 public class Network 
