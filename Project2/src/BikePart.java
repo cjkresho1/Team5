@@ -1,15 +1,10 @@
-/**
- * 
- */
+import java.lang.IllegalArgumentException;
 
 /**
- * @author Team5
- *
+ * @author Group5
  */
-public class BikePart 
+public class BikePart extends Part
 {
-	private String name;
-	private int num;
 	private double price;
 	private double salePrice;
 	private boolean onSale;
@@ -21,8 +16,7 @@ public class BikePart
 	 */
 	public BikePart()
 	{
-		name = "";
-		num = -1;
+		super();
 		price = -1;
 		salePrice = -1;
 		onSale = false;
@@ -41,12 +35,34 @@ public class BikePart
 	public BikePart(String name, int num, double listPrice, double salePrice, 
 			boolean isBeingSold, int quantity)
 	{
-		this.name = name;
-		this.num = num;
+		super(name, num);
 		this.price = listPrice;
 		this.salePrice = salePrice;
 		this.onSale = isBeingSold;
 		this.quantity = quantity;
+	}
+	
+	/**
+	 * Create a new BikePart from existing PartInfo and PartQuantity.
+	 * @throws IllegalArgumentException if part and quant don't have matching names and numbers
+	 * @param info existing PartInfo
+	 * @param quant existing PartQuantity
+	 */
+	public BikePart(PartInfo info, PartQuantity quant) throws IllegalArgumentException
+	{
+		super(info.getName(), info.getNum());
+		if (!info.getName().equals(quant.getName()))
+		{
+			throw new IllegalArgumentException("Mismatching part name");
+		}
+		if (info.getNum() != quant.getNum())
+		{
+			throw new IllegalArgumentException("Mismatching part number. IF THIS HAPPENS CONTACT CHARLIE.");
+		}
+		this.price = info.getPrice();
+		this.salePrice = info.getSalePrice();
+		this.onSale = info.isOnSale();
+		this.quantity = quant.getQuantity();
 	}
 	
 	/**
@@ -65,43 +81,10 @@ public class BikePart
 		return val + "false," + quantity;
 	}
 
-	
-	/**
-	 * @return the name
-	 */
-	public String getName()
-	{
-		return name;
-	}
-
-	/**
-	 * @param name the name to set
-	 */
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-
-	/**
-	 * @return the num
-	 */
-	public int getNum()
-	{
-		return num;
-	}
-
-	/**
-	 * @param num the num to set
-	 */
-	public void setNum(int num)
-	{
-		this.num = num;
-	}
-
 	/**
 	 * @return the price, or the sale price if onSale is true
 	 */
-	public double getPrice()
+	public double getCurPrice()
 	{
 		//Ternary operator. Returns the proper price
 		return (onSale) ? salePrice : price;
@@ -114,6 +97,14 @@ public class BikePart
 	{
 		this.price = price;
 	}
+	
+	/**
+	 * @return the list price
+	 */
+	public double getPrice()
+	{
+		return price;
+	}
 
 	/**
 	 * @param salePrice the salePrice to set
@@ -121,6 +112,14 @@ public class BikePart
 	public void setSalePrice(double salePrice)
 	{
 		this.salePrice = salePrice;
+	}
+	
+	/**
+	 * @return the sale price
+	 */
+	public double getSalePrice()
+	{
+		return salePrice;
 	}
 
 	/**

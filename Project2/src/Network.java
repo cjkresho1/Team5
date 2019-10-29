@@ -1,22 +1,21 @@
+import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
- * 
- */
-
-/**
- * @author Team5
- *
+ * @author Group5
  */
 public class Network 
 {
 	private Warehouse warehouse;
 	private LinkedList<Warehouse> vans;
+	private LinkedList<PartInfo> parts;
 	
 	
 	public Network()
 	{
-		
+		warehouse = new Warehouse("");
+		vans = new LinkedList<Warehouse>();
+		parts = new LinkedList<PartInfo>();
 	}
 	
 	
@@ -38,18 +37,13 @@ public class Network
 	}
 	
 	
-	public String display(int partNum)
-	{
-		return "";
-	}
-	
 	public String display(String partName)
 	{
 		return "";
 	}
 	
 	
-	public String sell(String partName, String warehouse)
+	public String sell(int partNum, String warehouse)
 	{
 		return "";
 	}
@@ -82,5 +76,23 @@ public class Network
 	public boolean quit(String filename)
 	{
 		return false;
+	}
+	
+	/*********************************HELPER METHODS HERE USE ME PLZ***************/
+	
+	
+	private boolean addPartToDatabase(PartInfo part)
+	{
+		return false;
+	}
+	
+	private PartInfo getPartFromDatabase(int partNum)
+	{
+		return null;
+	}
+	
+	private PartInfo getPartFromDatabase(String partName)
+	{
+		return null;
 	}
 }
