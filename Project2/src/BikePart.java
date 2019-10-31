@@ -66,6 +66,7 @@ public class BikePart extends Part
 	}
 	
 	/**
+	 * @Override
 	 * @return A string representation of the bike part:
 	 * 	partName,partNumber,listPrice,salePrice,onSale,quantity
 	 */
@@ -79,6 +80,33 @@ public class BikePart extends Part
 			return val + "true," + quantity;
 		}
 		return val + "false," + quantity;
+	}
+	
+	/**
+	 * @Override
+	 * @param o object to be compared
+	 * @return true if the objects have the same values, false otherwise
+	 */
+	public boolean equals(Object o)
+	{
+		if (o == null)
+		{
+			return false;
+		}
+		if (o.getClass() != this.getClass())
+		{
+			return false;
+		}
+		if (o == this)
+		{
+			return true;
+		}
+		
+		BikePart other = (BikePart) o;
+		
+		return (this.name.equals(other.name) && this.num == other.num 
+				&& this.price == other.price && this.salePrice == other.salePrice
+				&& this.onSale == other.onSale && this.quantity == other.quantity);
 	}
 
 	/**

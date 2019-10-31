@@ -58,6 +58,33 @@ public class PartInfo extends Part
 	}
 	
 	/**
+	 * @Override
+	 * @param o object to be compared
+	 * @return true if the objects have the same values, false otherwise
+	 */
+	public boolean equals(Object o)
+	{
+		if (o == null)
+		{
+			return false;
+		}
+		if (o.getClass() != this.getClass())
+		{
+			return false;
+		}
+		if (o == this)
+		{
+			return true;
+		}
+		
+		PartInfo other = (PartInfo) o;
+		
+		return (this.name.equals(other.name) && this.num == other.num 
+				&& this.price == other.price && this.salePrice == other.salePrice
+				&& this.onSale == other.onSale);
+	}
+	
+	/**
 	 * @return the price, or the sale price if onSale is true
 	 */
 	public double getCurPrice()

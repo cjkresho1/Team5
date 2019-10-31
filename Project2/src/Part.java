@@ -33,6 +33,33 @@ public class Part
 		this.name = name;
 		this.num = num;
 	}
+	
+	/**
+	 * @Override
+	 * @param o object to be compared
+	 * @return true if the objects have the same values, false otherwise
+	 */
+	public boolean equals(Object o)
+	{
+		if (o == null)
+		{
+			return false;
+		}
+		
+		if (o.getClass() != this.getClass())
+		{
+			return false;
+		}
+		
+		if (o == this)
+		{
+			return true;
+		}
+		
+		Part other = (Part)o;
+		
+		return (this.name.equals(other.name) && this.num == other.num);
+	}
 
 	/**
 	 * @return the part name

@@ -41,6 +41,32 @@ public class PartQuantity extends Part
 	}
 	
 	/**
+	 * @Override
+	 * @param o object to be compared
+	 * @return true if the objects have the same values, false otherwise
+	 */
+	public boolean equals(Object o)
+	{
+		if (o == null)
+		{
+			return false;
+		}
+		if (o.getClass() != this.getClass())
+		{
+			return false;
+		}
+		if (o == this)
+		{
+			return true;
+		}
+		
+		PartQuantity other = (PartQuantity) o;
+		
+		return (this.name.equals(other.name) && this.num == other.num 
+				&& this.quantity == other.quantity);
+	}
+	
+	/**
 	 * @return the part quantity
 	 */
 	public int getQuantity()
