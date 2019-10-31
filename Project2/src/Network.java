@@ -1,5 +1,6 @@
-import java.util.HashMap;
 import java.util.LinkedList;
+
+import java.lang.IllegalArgumentException;
 
 /**
  * Simulates a network of a primary warehouse, and a fleet of vans.
@@ -139,10 +140,35 @@ public class Network
 	/**
 	 * Add new part to the inventory list, or update an existing part
 	 * @param part complete part info of part to be added/updated
+	 * @throws IllegalArgumentException if the passed part has a matching part number
+	 * as a part in the list, but a different name.
 	 */
-	private void addPartToDatabase(PartInfo part)
+	private void addPartToDatabase(PartInfo part) throws IllegalArgumentException
 	{
+		boolean found = false;
+		for (PartInfo val : parts)
+		{
+			if (val.getNum() == part.getNum())
+			{
+				if (!val.getName().equals(part.getName()))
+				{
+					throw new IllegalArgumentException("Part data mismatch.");
+				}
+				else
+				{
+					val.setOnSale(part.isOnSale());
+					val.setPrice(part.getPrice());
+					val.setSalePrice(part.getSalePrice());
+				}
+				found = true;
+				break;
+			}
+		}
 		
+		if (!found)
+		{
+			parts.add(part);
+		}
 	}
 	
 	/**
@@ -152,6 +178,14 @@ public class Network
 	 */
 	private PartInfo getPartFromDatabase(int partNum)
 	{
+		for (PartInfo val : parts)
+		{
+			if (val.getNum() == partNum)
+			{
+				return val;
+			}
+		}
+		
 		return new PartInfo();
 	}
 	
@@ -162,6 +196,14 @@ public class Network
 	 */
 	private PartInfo getPartFromDatabase(String partName)
 	{
+		for (PartInfo val : parts)
+		{
+			if (val.getName().equals(partName))
+			{
+				return val;
+			}
+		}
+		
 		return new PartInfo();
 	}
 }
