@@ -86,7 +86,7 @@ public class Warehouse
                 this.parts.get(i).setQuantity(totalQuantity);
                 i = this.parts.size();
             } else if (i == this.parts.size()) {
-                this.parts.add(part);
+                this.parts.add(tempPart);
             } else {
                 System.out.println("Please enter a valid part.");
             }
@@ -100,6 +100,14 @@ public class Warehouse
 	 */
 	public String sell(int partNum)
 	{
+		for (int i = 0; i < this.parts.size(); i++) {
+			PartQuantity tempPart = this.parts.get(i);
+			int tempNum = tempPart.getNum();
+			if (partNum == tempNum) {
+				
+			}
+		}
+		
 		return "";
 	}
 	
