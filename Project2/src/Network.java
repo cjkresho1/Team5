@@ -125,11 +125,8 @@ public class Network {
 				return false;
 			}
 		}
-		int vanAmount = 0;
-		for (int i = 0; i< vans.size(); i++) {
-			vanAmount++;
-		}
-		//TODO make sure the van it creates has a unique name
+		vans.add(new Warehouse(vanName));
+		return true;
 	}
 
 	/**
