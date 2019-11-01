@@ -121,7 +121,7 @@ public class Network {
 	public boolean addVan(String vanName) {
 		for (int i = 0; i < vans.size(); i++) {
 			String tempVanName = vans.get(i).getName();
-			if (tempVanName.equals(vanName)) {
+			if (tempVanName.equals(vanName)||vanName.equals("")) {
 				return false;
 			}
 		}
