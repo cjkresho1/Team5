@@ -4,158 +4,155 @@ import java.lang.IllegalArgumentException;
 
 /**
  * Simulates a network of a primary warehouse, and a fleet of vans.
+ * 
  * @author Group5
  */
-public class Network 
-{
+public class Network {
 	/**
 	 * Name of the primary warehouse. No van can have this name.
 	 */
 	public static final String WAREHOUSE_NAME = "PRIMARY";
-	
+
 	/**
 	 * Primary warehouse.
 	 */
 	private Warehouse warehouse;
-	
+
 	/**
 	 * List of vans.
 	 */
 	private LinkedList<Warehouse> vans;
-	
+
 	/**
 	 * Cumulative list of parts in all warehouses.
 	 */
 	private LinkedList<PartInfo> parts;
-	
+
 	/**
 	 * Creates an empty network with no parts and no vans.
 	 */
-	public Network()
-	{
+	public Network() {
 		warehouse = new Warehouse(WAREHOUSE_NAME);
 		vans = new LinkedList<Warehouse>();
 		parts = new LinkedList<PartInfo>();
 	}
-	
+
 	/**
 	 * Creates a network with parts and vans based on the passed file.
+	 * 
 	 * @param filename file to pull data from
 	 */
-	public Network(String filename)
-	{
-		
+	public Network(String filename) {
+
 	}
-	
+
 	/**
 	 * Add parts based on an inventory file
+	 * 
 	 * @param filename inventory file to pull data from
 	 * @return true if the file is valid, false otherwise
 	 */
-	public boolean deliver(String filename)
-	{
+	public boolean deliver(String filename) {
 		return false;
 	}
-	
+
 	/**
 	 * Add an individual part to a warehouse.
-	 * @param part part to be added
+	 * 
+	 * @param part      part to be added
 	 * @param warehouse warehouse to add part to
 	 * @return true if the part is added, false otherwise (ex: invalid warehouse)
 	 */
-	public boolean add(BikePart part, String warehouse)
-	{
+	public boolean add(BikePart part, String warehouse) {
 		return false;
 	}
-	
+
 	/**
 	 * Return information about a part
+	 * 
 	 * @param partName part to return
 	 * @return part info, empty string (ie: "") if part cannot be found
 	 */
-	public PartInfo display(String partName)
-	{
+	public PartInfo display(String partName) {
 		return null;
 	}
-	
+
 	/**
 	 * Sell a part from a specific warehouse.
-	 * @param partNum part to sell
+	 * 
+	 * @param partNum   part to sell
 	 * @param warehouse warehouse to sell part from
 	 * @return info about sale, empty string (ie: "") if sale cannot be made
 	 */
-	public String sell(int partNum, String warehouse)
-	{
+	public String sell(int partNum, String warehouse) {
 		return "";
 	}
-	
+
 	/**
 	 * Return a sorted array of the contents of a warehouse, or of all warehouses
-	 * @param warehouse warehouse to sort, empty string (ie: "") indicates all warehouses
+	 * 
+	 * @param warehouse warehouse to sort, empty string (ie: "") indicates all
+	 *                  warehouses
 	 * @return a sorted array of parts by name
 	 */
-	public BikePart[] sortName(String warehouse)
-	{
+	public BikePart[] sortName(String warehouse) {
 		return null;
 	}
-	
+
 	/**
 	 * Return a sorted array of the contents of a warehouse, or of all warehouses
-	 * @param warehouse warehouse to sort, empty string (ie: "") indicates all warehouses
+	 * 
+	 * @param warehouse warehouse to sort, empty string (ie: "") indicates all
+	 *                  warehouses
 	 * @return a sorted array of parts by number
 	 */
-	public BikePart[] sortNum(String warehouse)
-	{
+	public BikePart[] sortNum(String warehouse) {
 		return null;
 	}
-	
+
 	/**
 	 * Add a new van to the fleet. Must be a unique, non-empty name
+	 * 
 	 * @param vanName name of van. Must be unique and non-empty (ie: not "")
 	 * @return true if the van is added, false if there is a name conflict
 	 */
-	public boolean addVan(String vanName)
-	{
+	public boolean addVan(String vanName) {
 		return false;
 	}
-	
+
 	/**
 	 * Transfer parts between vans. Attempt to move as many as quantity allows.
 	 * Ignore parts that do not exist in a van.
+	 * 
 	 * @param filename name of transfer file
 	 */
-	public void transfer(String filename)
-	{
-		
+	public void transfer(String filename) {
+
 	}
-	
-	
-	public boolean quit(String filename)
-	{
+
+	public boolean quit(String filename) {
 		return false;
 	}
-	
-	/*********************************HELPER METHODS HERE USE ME PLZ***************/
-	
+
+	/*********************************
+	 * HELPER METHODS HERE USE ME PLZ
+	 ***************/
+
 	/**
 	 * Add new part to the inventory list, or update an existing part
+	 * 
 	 * @param part complete part info of part to be added/updated
-	 * @throws IllegalArgumentException if the passed part has a matching part number
-	 * as a part in the list, but a different name.
+	 * @throws IllegalArgumentException if the passed part has a matching part
+	 *                                  number as a part in the list, but a
+	 *                                  different name.
 	 */
-	private void addPartToDatabase(PartInfo part) throws IllegalArgumentException
-	{
+	private void addPartToDatabase(PartInfo part) throws IllegalArgumentException {
 		boolean found = false;
-		for (PartInfo val : parts)
-		{
-			if (val.getNum() == part.getNum())
-			{
-				if (!val.getName().equals(part.getName()))
-				{
+		for (PartInfo val : parts) {
+			if (val.getNum() == part.getNum()) {
+				if (!val.getName().equals(part.getName())) {
 					throw new IllegalArgumentException("Part data mismatch.");
-				}
-				else
-				{
+				} else {
 					val.setOnSale(part.isOnSale());
 					val.setPrice(part.getPrice());
 					val.setSalePrice(part.getSalePrice());
@@ -164,46 +161,43 @@ public class Network
 				break;
 			}
 		}
-		
-		if (!found)
-		{
+
+		if (!found) {
 			parts.add(part);
 		}
 	}
-	
+
 	/**
 	 * Return information about a part by part number
+	 * 
 	 * @param partNum number of part to be found
-	 * @return PartInfo on the part. val.equals(new PartInfo()) iff partNum is not found
+	 * @return PartInfo on the part. val.equals(new PartInfo()) iff partNum is not
+	 *         found
 	 */
-	private PartInfo getPartFromDatabase(int partNum)
-	{
-		for (PartInfo val : parts)
-		{
-			if (val.getNum() == partNum)
-			{
+	private PartInfo getPartFromDatabase(int partNum) {
+		for (PartInfo val : parts) {
+			if (val.getNum() == partNum) {
 				return val;
 			}
 		}
-		
+
 		return new PartInfo();
 	}
-	
+
 	/**
 	 * Return information about a part by part name
+	 * 
 	 * @param partName name of part to be found
-	 * @return PartInfo on the part. val.equals(new PartInfo()) iff partNum is not found
+	 * @return PartInfo on the part. val.equals(new PartInfo()) iff partNum is not
+	 *         found
 	 */
-	private PartInfo getPartFromDatabase(String partName)
-	{
-		for (PartInfo val : parts)
-		{
-			if (val.getName().equals(partName))
-			{
+	private PartInfo getPartFromDatabase(String partName) {
+		for (PartInfo val : parts) {
+			if (val.getName().equals(partName)) {
 				return val;
 			}
 		}
-		
+
 		return new PartInfo();
 	}
 }

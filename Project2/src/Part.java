@@ -1,63 +1,58 @@
 /**
  * Part stores a linked name and number. Meant as a parent for inheritance.
+ * 
  * @author Group5
  */
-public class Part 
-{
+public class Part {
 	/**
 	 * Name of the part.
 	 */
 	protected String name;
-	
+
 	/**
 	 * Number of the part.
 	 */
 	protected int num;
-	
+
 	/**
 	 * Creates a new Part with trash values.
 	 */
-	public Part()
-	{
+	public Part() {
 		name = "";
 		num = -1;
 	}
-	
+
 	/**
 	 * Creates a new Part.
+	 * 
 	 * @param name the part name
-	 * @param num the part number
+	 * @param num  the part number
 	 */
-	public Part(String name, int num)
-	{
+	public Part(String name, int num) {
 		this.name = name;
 		this.num = num;
 	}
-	
+
 	/**
 	 * @Override
 	 * @param o object to be compared
 	 * @return true if the objects have the same values, false otherwise
 	 */
-	public boolean equals(Object o)
-	{
-		if (o == null)
-		{
+	public boolean equals(Object o) {
+		if (o == null) {
 			return false;
 		}
-		
-		if (o.getClass() != this.getClass())
-		{
+
+		if (o.getClass() != this.getClass()) {
 			return false;
 		}
-		
-		if (o == this)
-		{
+
+		if (o == this) {
 			return true;
 		}
-		
-		Part other = (Part)o;
-		
+
+		Part other = (Part) o;
+
 		return (this.name.equals(other.name) && this.num == other.num);
 	}
 
