@@ -119,7 +119,7 @@ public class Network {
 	 * @return true if the van is added, false if there is a name conflict
 	 */
 	public boolean addVan(String vanName) {
-		return false;
+		//TODO Sean will do this one
 	}
 
 	/**
