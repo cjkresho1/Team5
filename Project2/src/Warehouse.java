@@ -100,15 +100,17 @@ public class Warehouse
 	 */
 	public String sell(int partNum)
 	{
+		String result = "";
+		
 		for (int i = 0; i < this.parts.size(); i++) {
 			PartQuantity tempPart = this.parts.get(i);
 			int tempNum = tempPart.getNum();
 			if (partNum == tempNum) {
-				
+				this.parts.get(i).decrement();
+				result = (tempPart.getName() + "," + tempPart.getNum() + "," + tempPart.getQuantity());				
 			}
 		}
-		
-		return "";
+		return result;
 	}
 	
 	/**
