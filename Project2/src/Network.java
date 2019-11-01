@@ -43,7 +43,7 @@ public class Network {
 	 * @param filename file to pull data from
 	 */
 	public Network(String filename) {
-
+		//TODO Sean gonna try to do this one, no touchie
 	}
 
 	/**
@@ -171,7 +171,7 @@ public class Network {
 	 * Return information about a part by part number
 	 * 
 	 * @param partNum number of part to be found
-	 * @return PartInfo on the part. val.equals(new PartInfo()) iff partNum is not
+	 * @return PartInfo on the part. val.equals(new PartInfo()) if partNum is not
 	 *         found
 	 */
 	private PartInfo getPartFromDatabase(int partNum) {
