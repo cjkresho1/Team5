@@ -43,8 +43,7 @@ public class Warehouse
                 int totalQuantity = tempPart.addQuantity(newPart.getQuantity());
                 this.parts.get(i).setQuantity(totalQuantity);
                 i = this.parts.size();
-            }
-            if (i == this.parts.size()) {
+            } else if (i == this.parts.size()) {
                 this.parts.add(newPart);
             } else {
                 System.out.println("Please enter a valid part.");
@@ -64,8 +63,7 @@ public class Warehouse
                 int totalQuantity = tempPart.addQuantity(part.getQuantity());
                 this.parts.get(i).setQuantity(totalQuantity);
                 i = this.parts.size();
-            }
-            if (i == this.parts.size()) {
+            } else if (i == this.parts.size()) {
                 this.parts.add(part);
             } else {
                 System.out.println("Please enter a valid part.");
@@ -79,7 +77,20 @@ public class Warehouse
 	 */
 	public void add(BikePart part)
 	{
-		add(new PartQuantity(part));
+		PartQuantity tempPart = new PartQuantity(part);
+		
+		for (int i = 0; i < this.parts.size(); i++) {
+            PartQuantity oldPart = this.parts.get(i);
+            if (tempPart.getName().equals(oldPart.getName())) {
+                int totalQuantity = tempPart.addQuantity(oldPart.getQuantity());
+                this.parts.get(i).setQuantity(totalQuantity);
+                i = this.parts.size();
+            } else if (i == this.parts.size()) {
+                this.parts.add(part);
+            } else {
+                System.out.println("Please enter a valid part.");
+            }
+        }
 	}
 	
 	/**
