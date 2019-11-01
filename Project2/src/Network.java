@@ -2,6 +2,8 @@ import java.util.LinkedList;
 
 import java.lang.IllegalArgumentException;
 
+import java.util.Scanner;
+
 /**
  * Simulates a network of a primary warehouse, and a fleet of vans.
  * 
@@ -43,7 +45,7 @@ public class Network {
 	 * @param filename file to pull data from
 	 */
 	public Network(String filename) {
-		//TODO Sean gonna try to do this one, no touchie
+			//TODO Sean lied about doing this one, it's big hard, ima do an easier one
 	}
 
 	/**
