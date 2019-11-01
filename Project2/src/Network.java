@@ -119,7 +119,17 @@ public class Network {
 	 * @return true if the van is added, false if there is a name conflict
 	 */
 	public boolean addVan(String vanName) {
-		//TODO Sean will do this one
+		for (int i = 0; i < vans.size(); i++) {
+			String tempVanName = vans.get(i).getName();
+			if (tempVanName.equals(vanName)) {
+				return false;
+			}
+		}
+		int vanAmount = 0;
+		for (int i = 0; i< vans.size(); i++) {
+			vanAmount++;
+		}
+		//TODO make sure the van it creates has a unique name
 	}
 
 	/**
