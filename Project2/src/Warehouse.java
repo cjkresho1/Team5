@@ -58,7 +58,19 @@ public class Warehouse
 	 */
 	public void add(PartQuantity part)
 	{
-		
+		for (int i = 0; i < this.parts.size(); i++) {
+            PartQuantity tempPart = this.parts.get(i);
+            if (part.getName().equals(tempPart.getName())) {
+                int totalQuantity = tempPart.addQuantity(part.getQuantity());
+                this.parts.get(i).setQuantity(totalQuantity);
+                i = this.parts.size();
+            }
+            if (i == this.parts.size()) {
+                this.parts.add(part);
+            } else {
+                System.out.println("Please enter a valid part.");
+            }
+        }
 	}
 	
 	/**
