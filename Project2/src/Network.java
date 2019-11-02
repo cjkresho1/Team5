@@ -119,7 +119,7 @@ public class Network {
 			} else {
 				price = tempPart.getPrice();
 			}
-			return (tempPart.getName() + "," + tempPart.getNum() + "," + price + "," + tempPart.isOnSale() + "," + quantString);			
+			return (tempPart.getName() + "," + tempPart.getNum() + "," + price);			
 		} else {
 			return "";
 		}
