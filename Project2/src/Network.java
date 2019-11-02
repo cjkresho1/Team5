@@ -94,6 +94,7 @@ public class Network {
 	public String sell(int partNum, String warehouse) {
 		PartInfo tempPart = getPartFromDatabase(partNum);
 		Warehouse tempWarehouse = null;
+		double price;
 		
 		for (int i = 0; i < vans.size(); i++) {
 			if (warehouse.equals(vans.get(i).getName())) {
@@ -110,8 +111,12 @@ public class Network {
 			if (quantString.equals("")){
 				return "";
 			}
-			int newQuant = Integer.parseInt(quantString);
-			return "";
+			if (tempPart.isOnSale()) {
+				price = tempPart.getSalePrice();
+			} else {
+				price = tempPart.getPrice();
+			}
+			return (tempPart.getName() + "," + tempPart.getNum() + "," + price + "," + tempPart.isOnSale() + "," + quantString);			
 		} else {
 			return "";
 		}
