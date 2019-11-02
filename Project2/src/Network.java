@@ -212,7 +212,41 @@ public class Network {
 	 * @param filename name of transfer file
 	 */
 	public void transfer(String filename) {
-
+		Scanner scnr = new Scanner(filename);
+		String tempString = scnr.next();
+		String[] lineSplit = tempString.split(",");
+		String sourceWarehouse = lineSplit[0];
+		String deliverWarehouse = lineSplit[1];
+		Warehouse sourceWH;
+		Warehouse deliverWH;
+		if (sourceWarehouse.equals(WAREHOUSE_NAME)) {
+			sourceWH = warehouse;
+		} else {
+			for (int i = 0; i < vans.size(); i++) {
+				if (vans.get(i).getName().equals(sourceWarehouse)) {
+					sourceWH = vans.get(i);
+					break;
+				}
+			}
+		}
+		for (int i = 0; i < vans.size(); i++) {
+			if (vans.get(i).getName().equals(deliverWarehouse)) {
+				deliverWH = vans.get(i);
+				break;
+			}
+		}
+		
+		while (scnr.hasNext()) {
+			tempString = scnr.next();
+			lineSplit = tempString.split(",");
+			String name = lineSplit[0];
+			int quantity = Integer.parseInt(lineSplit[1]);
+			
+			for (int i = 0; i<parts.size(); i++) {
+				//TODO FINISH WRITING THIS METHOD
+			}
+		}
+		
 	}
 
 	public boolean quit(String filename) {
