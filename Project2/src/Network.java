@@ -4,6 +4,8 @@ import java.lang.IllegalArgumentException;
 
 import java.util.Scanner;
 
+import java.io.File;
+
 /**
  * Simulates a network of a primary warehouse, and a fleet of vans.
  * 
@@ -46,6 +48,7 @@ public class Network {
 	 */
 	public Network(String filename) {
 			//TODO Sean lied about doing this one, it's big hard, ima do an easier one
+		
 	}
 
 	/**
