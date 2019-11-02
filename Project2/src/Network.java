@@ -78,7 +78,9 @@ public class Network {
 	 * @return part info, empty string (ie: "") if part cannot be found
 	 */
 	public PartInfo display(String partName) {
-		return null;
+		PartInfo newPart = null;
+		newPart = getPartFromDatabase(partName);
+		return newPart;
 	}
 
 	/**
