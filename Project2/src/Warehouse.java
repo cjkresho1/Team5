@@ -107,7 +107,7 @@ public class Warehouse
 			int tempNum = tempPart.getNum();
 			if (partNum == tempNum) {
 				this.parts.get(i).decrement();
-				result = (tempPart.getName() + "," + tempPart.getNum() + "," + tempPart.getQuantity());				
+				result = (tempPart.getNum() + "," + tempPart.getQuantity());				
 			}
 		}
 		return result;

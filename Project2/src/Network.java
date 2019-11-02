@@ -87,6 +87,13 @@ public class Network {
 	 * @return info about sale, empty string (ie: "") if sale cannot be made
 	 */
 	public String sell(int partNum, String warehouse) {
+		PartInfo tempPart = getPartFromDatabase(partNum);
+		
+		
+		if (parts.contains(tempPart)) {
+			
+		}
+		
 		return "";
 	}
 
@@ -119,14 +126,12 @@ public class Network {
 	 * @return true if the van is added, false if there is a name conflict
 	 */
 	public boolean addVan(String vanName) {
-		for (int i = 0; i < vans.size(); i++) {
-			String tempVanName = vans.get(i).getName();
-			if (tempVanName.equals(vanName)||vanName.equals("")) {
-				return false;
-			}
+		if (vans.contains(new Warehouse(vanName))) {
+			return false;
+		} else {
+			vans.add(new Warehouse(vanName));
+			return true;
 		}
-		vans.add(new Warehouse(vanName));
-		return true;
 	}
 
 	/**
