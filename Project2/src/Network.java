@@ -92,14 +92,20 @@ public class Network {
 		PartInfo tempPart = getPartFromDatabase(partNum);
 		Warehouse tempWarehouse = null;
 		double price;
-		
-		for (int i = 0; i < vans.size(); i++) {
-			if (warehouse.equals(vans.get(i).getName())) {
-				tempWarehouse = vans.get(i);
-				break;
-			} 
-			if (i == vans.size() - 1) {
-				return "";
+		if(warehouse.equals(WAREHOUSE_NAME))
+		{
+			tempWarehouse = this.warehouse;
+		}
+		else
+		{
+			for (int i = 0; i < vans.size(); i++) {
+				if (warehouse.equals(vans.get(i).getName())) {
+					tempWarehouse = vans.get(i);
+					break;
+				} 
+				if (i == vans.size() - 1) {
+					return "";
+				}
 			}
 		}
 		
