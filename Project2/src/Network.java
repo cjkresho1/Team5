@@ -138,7 +138,7 @@ public class Network {
 	 *                  warehouses
 	 * @return a sorted array of parts by name
 	 */
-	public BikePart[] sortName(String warehouse) {
+	public BikePart[] sortName(String warehouseSort) {
 		return null;
 	}
 
@@ -149,7 +149,7 @@ public class Network {
 	 *                  warehouses
 	 * @return a sorted array of parts by number
 	 */
-	public BikePart[] sortNum(String warehouse) {
+	public BikePart[] sortNum(String warehouseSort) {
 		return null;
 	}
 
