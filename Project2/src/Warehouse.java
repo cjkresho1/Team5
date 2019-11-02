@@ -106,8 +106,9 @@ public class Warehouse
 			PartQuantity tempPart = this.parts.get(i);
 			int tempNum = tempPart.getNum();
 			if (partNum == tempNum) {
-				this.parts.get(i).decrement();
-				result = (tempPart.getNum() + "," + tempPart.getQuantity());				
+				tempPart.decrement();
+				int newQuant = (tempPart.getQuantity());
+				result = Integer.toString(newQuant);
 			}
 		}
 		return result;

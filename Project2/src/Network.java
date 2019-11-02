@@ -88,13 +88,29 @@ public class Network {
 	 */
 	public String sell(int partNum, String warehouse) {
 		PartInfo tempPart = getPartFromDatabase(partNum);
+		Warehouse tempWarehouse = null;
 		
-		
-		if (parts.contains(tempPart)) {
-			
+		for (int i = 0; i < vans.size(); i++) {
+			if (warehouse.equals(vans.get(i).getName())) {
+				tempWarehouse = vans.get(i);
+				break;
+			} 
+			if (i == vans.size() - 1) {
+				return "";
+			}
 		}
 		
-		return "";
+		if (parts.contains(tempPart)) {
+			String quantString = tempWarehouse.sell(partNum);
+			if (quantString.equals("")){
+				return "";
+			}
+			int newQuant = Integer.parseInt(quantString);
+			return "";
+		} else {
+			return "";
+		}
+		
 	}
 
 	/**
