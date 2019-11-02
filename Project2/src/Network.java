@@ -1,4 +1,5 @@
 import java.util.LinkedList;
+import java.util.Comparator;
 
 import java.lang.IllegalArgumentException;
 
@@ -151,7 +152,31 @@ public class Network {
 	 * @return a sorted array of parts by name
 	 */
 	public BikePart[] sortName(String warehouseSort) {
-		return null;
+		BikePart[] temp;
+		
+		if (warehouseSort.equals("")) {
+			temp = new BikePart[parts.size()];
+		
+			for (int i = 0; i < parts.size(); i++)
+			{
+            temp[i] = new BikePart(parts.get(i), new PartQuantity(parts.get(i).getName(), parts.get(i).getNum(), 0));
+			}
+		}
+        
+        Warehouse warehouse = new Warehouse();
+        PartQuantity[] quantity= warehouse.sortName();
+
+        for (int i = 0; i < quantity.length; i++)
+        {
+            for (int j = 0; j < temp.length; j++)
+            {
+                if (temp[j].getName().equals(quantity[i].getName()))
+                {
+                    temp[j].setQuantity(temp[j].getQuantity() + quantity[i].getQuantity());
+                    break;
+                }
+            }
+        }
 	}
 
 	/**
