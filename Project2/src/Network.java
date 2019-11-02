@@ -68,8 +68,11 @@ public class Network {
 	 * @return true if the part is added, false otherwise (ex: invalid warehouse)
 	 */
 	public boolean add(BikePart part, String warehouse) {
+
+			if (warehouse.equals(WAREHOUSE_NAME) ) {
+				warehouse.add part;
+			}
 		return false;
-	}
 
 	/**
 	 * Return information about a part
