@@ -48,6 +48,8 @@ public class Network {
 	 */
 	public Network(String filename) {
 			//TODO Sean lied about doing this one, it's big hard, ima do an easier one
+		File theFile = new File("db.txt");
+		
 		
 	}
 
