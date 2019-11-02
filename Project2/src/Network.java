@@ -67,12 +67,24 @@ public class Network {
 	 * @param warehouse warehouse to add part to
 	 * @return true if the part is added, false otherwise (ex: invalid warehouse)
 	 */
-	public boolean add(BikePart part, String warehouse) {
+	public boolean add(BikePart part, String warehouseName) {
+		
+		boolean check = false;
 
-			if (warehouse.equals(WAREHOUSE_NAME) ) {
-				warehouse.add part;
+		if (warehouseName.equals(WAREHOUSE_NAME) ) {
+				warehouse.add(part);
+				check=true;
 			}
-		return false;
+		else {
+				for (int i=0; i<vans.size(); i++) {
+					if (warehouseName.equals(vans.get(i).getName())) {
+						vans.get(i).add(part);
+						check=true;
+					}
+				}
+			}
+		return check;
+	}
 
 	/**
 	 * Return information about a part
