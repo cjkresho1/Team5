@@ -84,7 +84,7 @@ public class Warehouse
             if (tempPart.getName().equals(oldPart.getName())) {
                 int totalQuantity = tempPart.addQuantity(oldPart.getQuantity());
                 this.parts.get(i).setQuantity(totalQuantity);
-                i = this.parts.size();
+                break;
             } else if (i == this.parts.size()) {
                 this.parts.add(tempPart);
             } else {
@@ -106,7 +106,7 @@ public class Warehouse
 			PartQuantity tempPart = this.parts.get(i);
 			int tempNum = tempPart.getNum();
 			if (partNum == tempNum) {
-				tempPart.decrement();
+				this.parts.get(i).decrement();
 				int newQuant = (tempPart.getQuantity());
 				result = Integer.toString(newQuant);
 			}
