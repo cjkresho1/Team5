@@ -220,10 +220,13 @@ public class Network {
 		Scanner scnr = new Scanner(filename);
 		String tempString = scnr.next();
 		String[] lineSplit = tempString.split(",");
+		
 		String sourceWarehouse = lineSplit[0];
 		String deliverWarehouse = lineSplit[1];
-		Warehouse sourceWH;
-		Warehouse deliverWH;
+		
+		Warehouse sourceWH = null;
+		Warehouse deliverWH = null;
+		
 		if (sourceWarehouse.equals(WAREHOUSE_NAME)) {
 			sourceWH = warehouse;
 		} else {
@@ -247,11 +250,13 @@ public class Network {
 			String name = lineSplit[0];
 			int quantity = Integer.parseInt(lineSplit[1]);
 			
-			for (int i = 0; i<parts.size(); i++) {
-				//TODO FINISH WRITING THIS METHOD
-			}
+			PartInfo newPartInfo = getPartFromDatabase(name);
+			BikePart newBikePart = new BikePart(newPartInfo.getName(), newPartInfo.getNum(), newPartInfo.getPrice(), newPartInfo.getSalePrice(), newPartInfo.isOnSale(), quantity);
+			
+			int partsMoved = sourceWH.remove(newBikePart);
+			deliverWH.add(newBikePart.getName(), newBikePart.getNum(), partsMoved);
 		}
-		
+		scnr.close();
 	}
 
 	public boolean quit(String filename) {

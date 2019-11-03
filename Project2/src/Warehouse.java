@@ -94,6 +94,30 @@ public class Warehouse
 	}
 	
 	/**
+	 * Remove a number of parts from the Warehouse, or until it hits 0
+	 * @param part complete BikePart on the part to be removed
+	 * @return the total number of parts that actually were moved based on source Warehouse starting quantity
+	 */
+	public int remove(BikePart part) {
+		PartQuantity tempPart = new PartQuantity(part);
+		int partsMoved = 0;
+		
+		for (int i = 0; i < this.parts.size(); i++) {
+			PartQuantity oldPart = this.parts.get(i);
+			if (tempPart.getName().equals(oldPart.getName())) {
+				int newQuantity = oldPart.getQuantity() - tempPart.getQuantity();
+				if (newQuantity < 0) {
+					newQuantity = 0;
+				}
+				partsMoved = oldPart.getQuantity() - newQuantity;
+				this.parts.get(i).setQuantity(newQuantity);
+				break;
+			}
+		}
+		return partsMoved;
+	}
+	
+	/**
 	 * Attempt to sell a part from the warehouse. Decrement quantity if sold.
 	 * @param partNum number of part to be sold
 	 * @return Information about part sold. Empty string (ie: "") if sale isn't possible.
