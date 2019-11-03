@@ -1,4 +1,5 @@
 import java.util.LinkedList;
+import java.util.Comparator;
 
 import java.lang.IllegalArgumentException;
 
@@ -70,12 +71,25 @@ public class Network {
 	 * @param warehouse warehouse to add part to
 	 * @return true if the part is added, false otherwise (ex: invalid warehouse)
 	 */
-	public boolean add(BikePart part, String warehouse) {
 
-			if (warehouse.equals(WAREHOUSE_NAME) ) {
-				warehouse.add part;
+	public boolean add(BikePart part, String warehouseName) {
+		
+		boolean check = false;
+
+		if (warehouseName.equals(WAREHOUSE_NAME) ) {
+				warehouse.add(part);
+				check=true;
 			}
-		return false;
+		else {
+				for (int i=0; i<vans.size(); i++) {
+					if (warehouseName.equals(vans.get(i).getName())) {
+						vans.get(i).add(part);
+						check=true;
+					}
+				}
+			}
+		return check;
+
 	}
 
 	/**
@@ -85,7 +99,9 @@ public class Network {
 	 * @return part info, empty string (ie: "") if part cannot be found
 	 */
 	public PartInfo display(String partName) {
-		return null;
+		PartInfo newPart = null;
+		newPart = getPartFromDatabase(partName);
+		return newPart;
 	}
 
 	/**
@@ -99,14 +115,20 @@ public class Network {
 		PartInfo tempPart = getPartFromDatabase(partNum);
 		Warehouse tempWarehouse = null;
 		double price;
-		
-		for (int i = 0; i < vans.size(); i++) {
-			if (warehouse.equals(vans.get(i).getName())) {
-				tempWarehouse = vans.get(i);
-				break;
-			} 
-			if (i == vans.size() - 1) {
-				return "";
+		if(warehouse.equals(WAREHOUSE_NAME))
+		{
+			tempWarehouse = this.warehouse;
+		}
+		else
+		{
+			for (int i = 0; i < vans.size(); i++) {
+				if (warehouse.equals(vans.get(i).getName())) {
+					tempWarehouse = vans.get(i);
+					break;
+				} 
+				if (i == vans.size() - 1) {
+					return "";
+				}
 			}
 		}
 		
@@ -120,7 +142,7 @@ public class Network {
 			} else {
 				price = tempPart.getPrice();
 			}
-			return (tempPart.getName() + "," + tempPart.getNum() + "," + price + "," + tempPart.isOnSale() + "," + quantString);			
+			return (tempPart.getName() + "," + tempPart.getNum() + "," + price);			
 		} else {
 			return "";
 		}
@@ -134,8 +156,32 @@ public class Network {
 	 *                  warehouses
 	 * @return a sorted array of parts by name
 	 */
-	public BikePart[] sortName(String warehouse) {
-		return null;
+	public BikePart[] sortName(String warehouseSort) {
+		BikePart[] temp;
+		
+		if (warehouseSort.equals("")) {
+			temp = new BikePart[parts.size()];
+		
+			for (int i = 0; i < parts.size(); i++)
+			{
+            temp[i] = new BikePart(parts.get(i), new PartQuantity(parts.get(i).getName(), parts.get(i).getNum(), 0));
+			}
+		}
+        
+        Warehouse warehouse = new Warehouse();
+        PartQuantity[] quantity= warehouse.sortName();
+
+        for (int i = 0; i < quantity.length; i++)
+        {
+            for (int j = 0; j < temp.length; j++)
+            {
+                if (temp[j].getName().equals(quantity[i].getName()))
+                {
+                    temp[j].setQuantity(temp[j].getQuantity() + quantity[i].getQuantity());
+                    break;
+                }
+            }
+        }
 	}
 
 	/**
@@ -145,7 +191,7 @@ public class Network {
 	 *                  warehouses
 	 * @return a sorted array of parts by number
 	 */
-	public BikePart[] sortNum(String warehouse) {
+	public BikePart[] sortNum(String warehouseSort) {
 		return null;
 	}
 
@@ -171,7 +217,41 @@ public class Network {
 	 * @param filename name of transfer file
 	 */
 	public void transfer(String filename) {
-
+		Scanner scnr = new Scanner(filename);
+		String tempString = scnr.next();
+		String[] lineSplit = tempString.split(",");
+		String sourceWarehouse = lineSplit[0];
+		String deliverWarehouse = lineSplit[1];
+		Warehouse sourceWH;
+		Warehouse deliverWH;
+		if (sourceWarehouse.equals(WAREHOUSE_NAME)) {
+			sourceWH = warehouse;
+		} else {
+			for (int i = 0; i < vans.size(); i++) {
+				if (vans.get(i).getName().equals(sourceWarehouse)) {
+					sourceWH = vans.get(i);
+					break;
+				}
+			}
+		}
+		for (int i = 0; i < vans.size(); i++) {
+			if (vans.get(i).getName().equals(deliverWarehouse)) {
+				deliverWH = vans.get(i);
+				break;
+			}
+		}
+		
+		while (scnr.hasNext()) {
+			tempString = scnr.next();
+			lineSplit = tempString.split(",");
+			String name = lineSplit[0];
+			int quantity = Integer.parseInt(lineSplit[1]);
+			
+			for (int i = 0; i<parts.size(); i++) {
+				//TODO FINISH WRITING THIS METHOD
+			}
+		}
+		
 	}
 
 	public boolean quit(String filename) {
