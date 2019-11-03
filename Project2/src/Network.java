@@ -61,7 +61,24 @@ public class Network {
 	 * @return true if the file is valid, false otherwise
 	 */
 	public boolean deliver(String filename) {
-		return false;
+		File inFile = new File(filename);
+		if (!inFile.exists()) {
+			return false;
+		}
+		
+		Scanner scnr = new Scanner(filename);
+		
+		while (scnr.hasNext()) {
+			String[] partStuff = (scnr.next().split(","));
+			int newPartNum = Integer.parseInt(partStuff[1]);
+			double newPartBasePrice = Double.parseDouble(partStuff[2]);
+			double newPartSalePrice = Double.parseDouble(partStuff[3]);
+			boolean newPartOnSale = Boolean.parseBoolean(partStuff[4]);
+			int newPartQuantity = Integer.parseInt(partStuff[5]);
+			BikePart deliverPart = new BikePart(partStuff[0], newPartNum, newPartBasePrice, newPartSalePrice, newPartOnSale, newPartQuantity);
+			warehouse.add(deliverPart);
+		}
+		return true;
 	}
 
 	/**
