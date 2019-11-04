@@ -62,11 +62,10 @@ public class Warehouse
             if (part.getName().equals(tempPart.getName())) {
                 int totalQuantity = tempPart.addQuantity(part.getQuantity());
                 this.parts.get(i).setQuantity(totalQuantity);
-                i = this.parts.size();
-            } else if (i == this.parts.size()) {
+                break;
+            } else if (i == this.parts.size() - 1) {
                 this.parts.add(part);
-            } else {
-                System.out.println("Please enter a valid part.");
+                break;
             }
         }
 	}
@@ -84,9 +83,10 @@ public class Warehouse
             if (tempPart.getName().equals(oldPart.getName())) {
                 int totalQuantity = tempPart.addQuantity(oldPart.getQuantity());
                 this.parts.get(i).setQuantity(totalQuantity);
-                break;
+                return;
             } else if (i == this.parts.size()) {
                 this.parts.add(tempPart);
+                return;
             } else {
                 System.out.println("Please enter a valid part.");
             }
@@ -144,7 +144,7 @@ public class Warehouse
 	 */
 	public PartQuantity[] sortName()
 	{
-		PartQuantity[] val = new PartQuantity[parts.size()];
+		PartQuantity[] val = new PartQuantity[this.parts.size()];
 
 		/*
 		 * This sorts the warehouse inventory based on Name. This is accomplished by

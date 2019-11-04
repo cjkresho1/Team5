@@ -77,12 +77,13 @@ public class Network {
 		}
 		while (scnr.hasNext()) {
 			String[] partStuff = (scnr.next().split(","));
+			String newPartName = partStuff[0];
 			int newPartNum = Integer.parseInt(partStuff[1]);
 			double newPartBasePrice = Double.parseDouble(partStuff[2]);
 			double newPartSalePrice = Double.parseDouble(partStuff[3]);
 			boolean newPartOnSale = Boolean.parseBoolean(partStuff[4]);
 			int newPartQuantity = Integer.parseInt(partStuff[5]);
-			BikePart deliverPart = new BikePart(partStuff[0], newPartNum, newPartBasePrice, newPartSalePrice,
+			BikePart deliverPart = new BikePart(newPartName, newPartNum, newPartBasePrice, newPartSalePrice,
 					newPartOnSale, newPartQuantity);
 			warehouse.add(deliverPart);
 			parts.add(new PartInfo(deliverPart));
@@ -188,11 +189,11 @@ public class Network {
 	public BikePart[] sortName(String warehouseSort) {
 		//TODO FIX METHOD
 		int i;
-		LinkedList<PartQuantity> sortedPartQuantities;
-		Warehouse sortedWarehouse = null;
+		PartQuantity[] sortedPartQuantities;
+		Warehouse sortedWarehouse = warehouse;
 		BikePart[] sortedBikeParts = null;
 
-		if (warehouseSort.equals("")) {
+		if (warehouseSort.equals("all")) {
 			i = 0;
 			sortedBikeParts = new BikePart[parts.size()];
 		} else {
@@ -206,10 +207,10 @@ public class Network {
 		}
 
 		if (i == 1) {
-			sortedPartQuantities = new LinkedList(Arrays.asList(sortedWarehouse.sortName()));
-			sortedBikeParts = new BikePart[sortedPartQuantities.size()];
-			for (int j = 0; j < sortedPartQuantities.size(); j++) {
-				PartQuantity sortPart = sortedPartQuantities.get(j);
+			sortedPartQuantities = sortedWarehouse.sortName();
+			sortedBikeParts = new BikePart[sortedPartQuantities.length];
+			for (int j = 0; j < sortedPartQuantities.length; j++) {
+				PartQuantity sortPart = sortedPartQuantities[j];
 				BikePart sortedBikePart = new BikePart(getPartFromDatabase(sortPart.getName()), sortPart);
 				sortedBikeParts[j] = sortedBikePart;
 			}
@@ -218,23 +219,23 @@ public class Network {
 			LinkedList<PartQuantity> tempSortedPartQuantities = new LinkedList<>();
 			for (int j = 0; j < vans.size(); j++) {
 				Warehouse currentWH = vans.get(j);
-				LinkedList<PartQuantity> warehouseSortedParts = new LinkedList(Arrays.asList(currentWH.sortName()));
-				for (int k = 0; k < warehouseSortedParts.size(); k++) {
-					tempSortedPartQuantities.add(warehouseSortedParts.get(k));
+				PartQuantity[] warehouseSortedParts = currentWH.sortName();
+				for (int k = 0; k < warehouseSortedParts.length; k++) {
+					tempSortedPartQuantities.add(warehouseSortedParts[k]);
 				}
 			}
-			LinkedList<PartQuantity> warehouseSortedParts = new LinkedList(Arrays.asList(warehouse.sortName()));
-			for (int j = 0; j < warehouseSortedParts.size(); j++) {
-				tempSortedPartQuantities.add(warehouseSortedParts.get(j));
+			PartQuantity[] warehouseSortedParts = warehouse.sortName();
+			for (int j = 0; j < warehouseSortedParts.length; j++) {
+				tempSortedPartQuantities.add(warehouseSortedParts[j]);
 			}
 			for (int j = 0; j < tempSortedPartQuantities.size(); j++) {
 				Warehouse tempWarehouse = new Warehouse("tempWarehouse");
 				tempWarehouse.add(tempSortedPartQuantities.get(j));
 				if (j == tempSortedPartQuantities.size() - 1) {
-					sortedPartQuantities = new LinkedList(Arrays.asList(tempWarehouse.sortName()));
-					sortedBikeParts = new BikePart[sortedPartQuantities.size()];
-					for (int k = 0; k < sortedPartQuantities.size(); k++) {
-						PartQuantity sortPart = sortedPartQuantities.get(k);
+					sortedPartQuantities = tempWarehouse.sortName();
+					sortedBikeParts = new BikePart[sortedPartQuantities.length];
+					for (int k = 0; k < sortedPartQuantities.length; k++) {
+						PartQuantity sortPart = sortedPartQuantities[k];
 						BikePart sortedBikePart = new BikePart(getPartFromDatabase(sortPart.getName()), sortPart);
 						sortedBikeParts[k] = sortedBikePart;
 					}
@@ -358,6 +359,9 @@ public class Network {
 				if (vans.get(i).getName().equals(sourceWarehouse)) {
 					sourceWH = vans.get(i);
 					break;
+				} else if (i == vans.size() - 1) {
+					System.out.println("Could not find specified warehouse.");
+					return;
 				}
 			}
 		}

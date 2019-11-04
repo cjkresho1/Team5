@@ -25,7 +25,7 @@ public class Runner
 	public static void main(String[] args)
 	{
 		//create new Warehouse from database file 
-		Network network = new Network(WAREHOUSE_DB);
+		Network network = new Network();
 		Scanner scan = new Scanner(System.in);
 		
 		//loop over user I/O process
@@ -84,7 +84,7 @@ public class Runner
 				System.out.println(network.display(scan.next()));
 				break;
 			case 4: //SortName
-				System.out.println("Enter the warehouse to print, or hit enter for all:");
+				System.out.println("Enter the warehouse to print, or type 'all' for all:");
 				BikePart[] tempArray = network.sortName(scan.next());
 				for (int i = 0; i < tempArray.length; i++)
 				{
