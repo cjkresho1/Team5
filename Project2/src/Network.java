@@ -49,10 +49,9 @@ public class Network {
 	 * @param filename file to pull data from
 	 */
 	public Network(String filename) {
-			//TODO Sean lied about doing this one, it's big hard, ima do an easier one
+		// TODO Sean lied about doing this one, it's big hard, ima do an easier one
 		File theFile = new File("db.txt");
-		
-		
+
 	}
 
 	/**
@@ -66,9 +65,9 @@ public class Network {
 		if (!inFile.exists()) {
 			return false;
 		}
-		
+
 		Scanner scnr = new Scanner(filename);
-		
+
 		while (scnr.hasNext()) {
 			String[] partStuff = (scnr.next().split(","));
 			int newPartNum = Integer.parseInt(partStuff[1]);
@@ -76,7 +75,8 @@ public class Network {
 			double newPartSalePrice = Double.parseDouble(partStuff[3]);
 			boolean newPartOnSale = Boolean.parseBoolean(partStuff[4]);
 			int newPartQuantity = Integer.parseInt(partStuff[5]);
-			BikePart deliverPart = new BikePart(partStuff[0], newPartNum, newPartBasePrice, newPartSalePrice, newPartOnSale, newPartQuantity);
+			BikePart deliverPart = new BikePart(partStuff[0], newPartNum, newPartBasePrice, newPartSalePrice,
+					newPartOnSale, newPartQuantity);
 			warehouse.add(deliverPart);
 		}
 		return true;
@@ -91,21 +91,20 @@ public class Network {
 	 */
 
 	public boolean add(BikePart part, String warehouseName) {
-		
+
 		boolean check = false;
 
-		if (warehouseName.equals(WAREHOUSE_NAME) ) {
-				warehouse.add(part);
-				check=true;
-			}
-		else {
-				for (int i=0; i<vans.size(); i++) {
-					if (warehouseName.equals(vans.get(i).getName())) {
-						vans.get(i).add(part);
-						check=true;
-					}
+		if (warehouseName.equals(WAREHOUSE_NAME)) {
+			warehouse.add(part);
+			check = true;
+		} else {
+			for (int i = 0; i < vans.size(); i++) {
+				if (warehouseName.equals(vans.get(i).getName())) {
+					vans.get(i).add(part);
+					check = true;
 				}
 			}
+		}
 		return check;
 
 	}
@@ -133,26 +132,23 @@ public class Network {
 		PartInfo tempPart = getPartFromDatabase(partNum);
 		Warehouse tempWarehouse = null;
 		double price;
-		if(warehouse.equals(WAREHOUSE_NAME))
-		{
+		if (warehouse.equals(WAREHOUSE_NAME)) {
 			tempWarehouse = this.warehouse;
-		}
-		else
-		{
+		} else {
 			for (int i = 0; i < vans.size(); i++) {
 				if (warehouse.equals(vans.get(i).getName())) {
 					tempWarehouse = vans.get(i);
 					break;
-				} 
+				}
 				if (i == vans.size() - 1) {
 					return "";
 				}
 			}
 		}
-		
+
 		if (parts.contains(tempPart)) {
 			String quantString = tempWarehouse.sell(partNum);
-			if (quantString.equals("")){
+			if (quantString.equals("")) {
 				return "";
 			}
 			if (tempPart.isOnSale()) {
@@ -160,11 +156,11 @@ public class Network {
 			} else {
 				price = tempPart.getPrice();
 			}
-			return (tempPart.getName() + "," + tempPart.getNum() + "," + price);			
+			return (tempPart.getName() + "," + tempPart.getNum() + "," + price);
 		} else {
 			return "";
 		}
-		
+
 	}
 
 	/**
@@ -179,7 +175,7 @@ public class Network {
 		LinkedList<PartQuantity> sortedPartQuantities;
 		Warehouse sortedWarehouse = null;
 		BikePart[] sortedBikeParts = null;
-		
+
 		if (warehouseSort.equals("")) {
 			i = 0;
 			sortedBikeParts = new BikePart[parts.size()];
@@ -192,19 +188,19 @@ public class Network {
 				}
 			}
 		}
-		
+
 		if (i == 1) {
 			sortedPartQuantities = new LinkedList(Arrays.asList(sortedWarehouse.sortName()));
 			sortedBikeParts = new BikePart[sortedPartQuantities.size()];
-			for (int j = 0; j < sortedPartQuantities.size(); j++) {				
+			for (int j = 0; j < sortedPartQuantities.size(); j++) {
 				PartQuantity sortPart = sortedPartQuantities.get(j);
 				BikePart sortedBikePart = new BikePart(getPartFromDatabase(sortPart.getName()), sortPart);
-				sortedBikeParts[j] = sortedBikePart;				
+				sortedBikeParts[j] = sortedBikePart;
 			}
 			return sortedBikeParts;
 		} else if (i == 0) {
 			LinkedList<PartQuantity> tempSortedPartQuantities = new LinkedList<>();
-			for (int j = 0; j < vans.size(); j++) {				
+			for (int j = 0; j < vans.size(); j++) {
 				Warehouse currentWH = vans.get(j);
 				LinkedList<PartQuantity> warehouseSortedParts = new LinkedList(Arrays.asList(currentWH.sortName()));
 				for (int k = 0; k < warehouseSortedParts.size(); k++) {
@@ -241,7 +237,62 @@ public class Network {
 	 * @return a sorted array of parts by number
 	 */
 	public BikePart[] sortNum(String warehouseSort) {
-		return null;
+		int i;
+		LinkedList<PartQuantity> sortedPartQuantities;
+		Warehouse sortedWarehouse = null;
+		BikePart[] sortedBikeParts = null;
+
+		if (warehouseSort.equals("")) {
+			i = 0;
+			sortedBikeParts = new BikePart[parts.size()];
+		} else {
+			i = 1;
+			for (int j = 0; j < vans.size(); j++) {
+				if (warehouseSort.equals(vans.get(j).getName())) {
+					sortedWarehouse = vans.get(j);
+					break;
+				}
+			}
+		}
+
+		if (i == 1) {
+			sortedPartQuantities = new LinkedList(Arrays.asList(sortedWarehouse.sortName()));
+			sortedBikeParts = new BikePart[sortedPartQuantities.size()];
+			for (int j = 0; j < sortedPartQuantities.size(); j++) {
+				PartQuantity sortPart = sortedPartQuantities.get(j);
+				BikePart sortedBikePart = new BikePart(getPartFromDatabase(sortPart.getName()), sortPart);
+				sortedBikeParts[j] = sortedBikePart;
+			}
+			return sortedBikeParts;
+		} else if (i == 0) {
+			LinkedList<PartQuantity> tempSortedPartQuantities = new LinkedList<>();
+			for (int j = 0; j < vans.size(); j++) {
+				Warehouse currentWH = vans.get(j);
+				LinkedList<PartQuantity> warehouseSortedParts = new LinkedList(Arrays.asList(currentWH.sortNumber()));
+				for (int k = 0; k < warehouseSortedParts.size(); k++) {
+					tempSortedPartQuantities.add(warehouseSortedParts.get(k));
+				}
+			}
+			LinkedList<PartQuantity> warehouseSortedParts = new LinkedList(Arrays.asList(warehouse.sortNumber()));
+			for (int j = 0; j < warehouseSortedParts.size(); j++) {
+				tempSortedPartQuantities.add(warehouseSortedParts.get(j));
+			}
+			for (int j = 0; j < tempSortedPartQuantities.size(); j++) {
+				Warehouse tempWarehouse = new Warehouse("tempWarehouse");
+				tempWarehouse.add(tempSortedPartQuantities.get(j));
+				if (j == tempSortedPartQuantities.size() - 1) {
+					sortedPartQuantities = new LinkedList(Arrays.asList(tempWarehouse.sortNumber()));
+					sortedBikeParts = new BikePart[sortedPartQuantities.size()];
+					for (int k = 0; k < sortedPartQuantities.size(); k++) {
+						PartQuantity sortPart = sortedPartQuantities.get(k);
+						BikePart sortedBikePart = new BikePart(getPartFromDatabase(sortPart.getName()), sortPart);
+						sortedBikeParts[k] = sortedBikePart;
+					}
+					return sortedBikeParts;
+				}
+			}
+		}
+		return sortedBikeParts;
 	}
 
 	/**
@@ -269,13 +320,13 @@ public class Network {
 		Scanner scnr = new Scanner(filename);
 		String tempString = scnr.next();
 		String[] lineSplit = tempString.split(",");
-		
+
 		String sourceWarehouse = lineSplit[0];
 		String deliverWarehouse = lineSplit[1];
-		
+
 		Warehouse sourceWH = null;
 		Warehouse deliverWH = null;
-		
+
 		if (sourceWarehouse.equals(WAREHOUSE_NAME)) {
 			sourceWH = warehouse;
 		} else {
@@ -292,16 +343,17 @@ public class Network {
 				break;
 			}
 		}
-		
+
 		while (scnr.hasNext()) {
 			tempString = scnr.next();
 			lineSplit = tempString.split(",");
 			String name = lineSplit[0];
 			int quantity = Integer.parseInt(lineSplit[1]);
-			
+
 			PartInfo newPartInfo = getPartFromDatabase(name);
-			BikePart newBikePart = new BikePart(newPartInfo.getName(), newPartInfo.getNum(), newPartInfo.getPrice(), newPartInfo.getSalePrice(), newPartInfo.isOnSale(), quantity);
-			
+			BikePart newBikePart = new BikePart(newPartInfo.getName(), newPartInfo.getNum(), newPartInfo.getPrice(),
+					newPartInfo.getSalePrice(), newPartInfo.isOnSale(), quantity);
+
 			int partsMoved = sourceWH.remove(newBikePart);
 			deliverWH.add(newBikePart.getName(), newBikePart.getNum(), partsMoved);
 		}
