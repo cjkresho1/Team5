@@ -126,7 +126,7 @@ public class Network {
 	public String display(String partName) {
 		PartInfo newPart = null;
 		newPart = getPartFromDatabase(partName);
-		String returnPart = (newPart.getName() + newPart.getNum() + newPart.getPrice() + newPart.getSalePrice() + newPart.isOnSale());
+		String returnPart = (newPart.getName() + "," + Integer.toString(newPart.getNum()) + "," + Double.toString(newPart.getPrice()) + "," + Double.toString(newPart.getSalePrice()) + "," + Boolean.toString(newPart.isOnSale()));
 		return returnPart;
 	}
 
