@@ -51,11 +51,54 @@ public class Network {
 	 * 
 	 * @param filename file to pull data from
 	 */
-	public Network(String filename) {
-		// TODO Sean lied about doing this one, it's big hard, ima do an easier one
-		File theFile = new File("db.txt");
+	public Network(String filename) throws FileNotFoundException {
 
-	}
+        File theFile = new File("db.txt");
+        Scanner scanner = new Scanner(theFile);
+        warehouse = new Warehouse(WAREHOUSE_NAME);
+        vans = new LinkedList<Warehouse>();
+        parts = new LinkedList<PartInfo>();
+        LinkedList<String> master = new LinkedList<String>();
+        int counter = 0;
+        while (scanner.hasNext()) {
+            int i = 0;
+            master.set(i, scanner.nextLine());
+            i++;
+        }
+        for (int i = 0; i < master.size(); i++) {
+            while (counter == 0) {
+                if (!master.get(i).equals("")) {
+                    String temp = master.get(i);
+                    String[] toPlace = temp.split(",");
+                    BikePart part = new BikePart(toPlace[0], Integer.parseInt(toPlace[1]),
+                            Double.parseDouble(toPlace[2]), Double.parseDouble(toPlace[3]),
+                            Boolean.parseBoolean(toPlace[4]), Integer.parseInt(toPlace[5]));
+                    warehouse.add(part);
+                    i++;
+
+                } else {
+                    counter++;
+                }
+            }
+            for (int j = 0; j < 1; j++) {
+                if (!master.get(i).equals("")) {
+                    String temp = master.get(i);
+                    if (!temp.contains(",")) {
+                        addVan(temp);
+                    }
+                    else {
+                        String[] toPlace = temp.split(",");
+                        BikePart part = new BikePart(toPlace[0], Integer.parseInt(toPlace[1]),
+                                Double.parseDouble(toPlace[2]), Double.parseDouble(toPlace[3]),
+                                Boolean.parseBoolean(toPlace[4]), Integer.parseInt(toPlace[5]));
+                        vans.get(i).add(part);
+                    }
+                }
+
+            }
+        }
+        scanner.close();
+    }
 
 	/**
 	 * Add parts based on an inventory file
