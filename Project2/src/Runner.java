@@ -102,9 +102,11 @@ public class Runner
 			case 6: //Transfer
 				System.out.println("Enter transfer file name:");
 				network.transfer(scan.next());
+				break;
 			case 7: //Add Van
 				System.out.println("Enter van name:");
 				network.addVan(scan.next());
+				break;
 			case 8: //Quit
 				network.quit(WAREHOUSE_DB);
 				scan.close();

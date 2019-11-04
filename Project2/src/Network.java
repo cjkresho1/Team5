@@ -85,6 +85,7 @@ public class Network {
 			BikePart deliverPart = new BikePart(partStuff[0], newPartNum, newPartBasePrice, newPartSalePrice,
 					newPartOnSale, newPartQuantity);
 			warehouse.add(deliverPart);
+			parts.add(new PartInfo(deliverPart));
 		}
 		scnr.close();
 		return true;
@@ -104,11 +105,13 @@ public class Network {
 
 		if (warehouseName.equals(WAREHOUSE_NAME)) {
 			warehouse.add(part);
+			parts.add(new PartInfo(part));
 			check = true;
 		} else {
 			for (int i = 0; i < vans.size(); i++) {
 				if (warehouseName.equals(vans.get(i).getName())) {
 					vans.get(i).add(part);
+					parts.add(new PartInfo(part));
 					check = true;
 				}
 			}
@@ -124,9 +127,12 @@ public class Network {
 	 * @return part info, empty string (ie: "") if part cannot be found
 	 */
 	public String display(String partName) {
-		PartInfo newPart = null;
-		newPart = getPartFromDatabase(partName);
-		String returnPart = (newPart.getName() + "," + Integer.toString(newPart.getNum()) + "," + Double.toString(newPart.getPrice()) + "," + Double.toString(newPart.getSalePrice()) + "," + Boolean.toString(newPart.isOnSale()));
+		String returnPart = "";
+		for (int i = 0; i < parts.size(); i++) {
+			if (parts.get(i).getName().equals(partName)) {
+				returnPart = (getPartFromDatabase(partName).getName() + "," + Integer.toString(getPartFromDatabase(partName).getNum()) + "," + Double.toString(getPartFromDatabase(partName).getPrice()) + "," + Double.toString(getPartFromDatabase(partName).getSalePrice()) + "," + Boolean.toString(getPartFromDatabase(partName).isOnSale()));
+			}
+		}
 		return returnPart;
 	}
 
@@ -180,6 +186,7 @@ public class Network {
 	 * @return a sorted array of parts by name
 	 */
 	public BikePart[] sortName(String warehouseSort) {
+		//TODO FIX METHOD
 		int i;
 		LinkedList<PartQuantity> sortedPartQuantities;
 		Warehouse sortedWarehouse = null;
@@ -246,6 +253,7 @@ public class Network {
 	 * @return a sorted array of parts by number
 	 */
 	public BikePart[] sortNum(String warehouseSort) {
+		//TODO FIX METHOD
 		int i;
 		LinkedList<PartQuantity> sortedPartQuantities;
 		Warehouse sortedWarehouse = null;
