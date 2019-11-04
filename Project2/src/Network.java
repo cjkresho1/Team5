@@ -2,12 +2,13 @@ import java.util.LinkedList;
 import java.util.Arrays;
 
 import java.lang.IllegalArgumentException;
-
+import java.lang.reflect.Array;
 import java.util.Scanner;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.BufferedWriter;
 
 /**
@@ -376,6 +377,38 @@ public class Network {
 
 	public boolean quit(String filename) {
 		File file = new File(filename);
+		BikePart[] tempParts;
+		try {
+			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+			tempParts = sortName("warehouse");
+			for (int i = 0; i < tempParts.length; i++) {
+				try {
+					BikePart tempPart = (BikePart) Array.get(tempParts, i);
+					bufferedWriter.write(tempPart.getName() + tempPart.getNum() + tempPart.getPrice() + tempPart.getSalePrice() + tempPart.isOnSale() + tempPart.getQuantity());
+					bufferedWriter.newLine();
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (ArrayIndexOutOfBoundsException e) {
+					e.printStackTrace();
+				}
+			}
+			for (int i = 0; i < vans.size(); i++) {
+				bufferedWriter.newLine();
+				tempParts = sortName(vans.get(i).getName());
+				bufferedWriter.write(vans.get(i).getName());
+				bufferedWriter.newLine();
+				for (int j = 0; j < tempParts.length; j++) {
+					BikePart tempPart = (BikePart) Array.get(tempParts, j);
+					bufferedWriter.write(tempPart.getName() + tempPart.getNum() + tempPart.getPrice() + tempPart.getSalePrice() + tempPart.isOnSale() + tempPart.getQuantity());
+					bufferedWriter.newLine();
+				}
+			}
+		bufferedWriter.flush();
+		bufferedWriter.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 	}
 
