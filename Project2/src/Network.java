@@ -256,7 +256,7 @@ public class Network {
 	public BikePart[] sortNum(String warehouseSort) {
 		//TODO FIX METHOD
 		int i;
-		LinkedList<PartQuantity> sortedPartQuantities;
+		PartQuantity[] sortedPartQuantities;
 		Warehouse sortedWarehouse = null;
 		BikePart[] sortedBikeParts = null;
 
@@ -274,10 +274,10 @@ public class Network {
 		}
 
 		if (i == 1) {
-			sortedPartQuantities = new LinkedList(Arrays.asList(sortedWarehouse.sortName()));
-			sortedBikeParts = new BikePart[sortedPartQuantities.size()];
-			for (int j = 0; j < sortedPartQuantities.size(); j++) {
-				PartQuantity sortPart = sortedPartQuantities.get(j);
+			sortedPartQuantities = sortedWarehouse.sortName();
+			sortedBikeParts = new BikePart[sortedPartQuantities.length];
+			for (int j = 0; j < sortedPartQuantities.length; j++) {
+				PartQuantity sortPart = sortedPartQuantities[j];
 				BikePart sortedBikePart = new BikePart(getPartFromDatabase(sortPart.getName()), sortPart);
 				sortedBikeParts[j] = sortedBikePart;
 			}
@@ -286,23 +286,23 @@ public class Network {
 			LinkedList<PartQuantity> tempSortedPartQuantities = new LinkedList<>();
 			for (int j = 0; j < vans.size(); j++) {
 				Warehouse currentWH = vans.get(j);
-				LinkedList<PartQuantity> warehouseSortedParts = new LinkedList(Arrays.asList(currentWH.sortNumber()));
-				for (int k = 0; k < warehouseSortedParts.size(); k++) {
-					tempSortedPartQuantities.add(warehouseSortedParts.get(k));
+				PartQuantity[] warehouseSortedParts = currentWH.sortNumber();
+				for (int k = 0; k < warehouseSortedParts.length; k++) {
+					tempSortedPartQuantities.add(warehouseSortedParts[k]);
 				}
 			}
-			LinkedList<PartQuantity> warehouseSortedParts = new LinkedList(Arrays.asList(warehouse.sortNumber()));
-			for (int j = 0; j < warehouseSortedParts.size(); j++) {
-				tempSortedPartQuantities.add(warehouseSortedParts.get(j));
+			PartQuantity[] warehouseSortedParts = warehouse.sortNumber();
+			for (int j = 0; j < warehouseSortedParts.length; j++) {
+				tempSortedPartQuantities.add(warehouseSortedParts[j]);
 			}
 			for (int j = 0; j < tempSortedPartQuantities.size(); j++) {
 				Warehouse tempWarehouse = new Warehouse("tempWarehouse");
 				tempWarehouse.add(tempSortedPartQuantities.get(j));
 				if (j == tempSortedPartQuantities.size() - 1) {
-					sortedPartQuantities = new LinkedList(Arrays.asList(tempWarehouse.sortNumber()));
-					sortedBikeParts = new BikePart[sortedPartQuantities.size()];
-					for (int k = 0; k < sortedPartQuantities.size(); k++) {
-						PartQuantity sortPart = sortedPartQuantities.get(k);
+					sortedPartQuantities = tempWarehouse.sortNumber();
+					sortedBikeParts = new BikePart[sortedPartQuantities.length];
+					for (int k = 0; k < sortedPartQuantities.length; k++) {
+						PartQuantity sortPart = sortedPartQuantities[k];
 						BikePart sortedBikePart = new BikePart(getPartFromDatabase(sortPart.getName()), sortPart);
 						sortedBikeParts[k] = sortedBikePart;
 					}
@@ -419,8 +419,8 @@ public class Network {
 		bufferedWriter.flush();
 		bufferedWriter.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
 		return false;
 	}
