@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
 
 /**
  * Simulates a network of a primary warehouse, and a fleet of vans.
@@ -83,6 +85,7 @@ public class Network {
 					newPartOnSale, newPartQuantity);
 			warehouse.add(deliverPart);
 		}
+		scnr.close();
 		return true;
 	}
 
@@ -372,6 +375,7 @@ public class Network {
 	}
 
 	public boolean quit(String filename) {
+		File file = new File(filename);
 		return false;
 	}
 
