@@ -1,11 +1,4 @@
-handleBars,84475,6.50,4.50,true,3
-bikeSeat,38590,15.00,10.50,false,6
-bike,83063,50.00,38.00,true,15
 
 VanA
-bike,83063,50.00,38.00,true,25
-bikeBell,10584,5.00,4.00,false,34
 
 VanB
-bikeBell,10584,5.00,4.00,false,13
-customSpokes,58203,30.00,22.50,true,17

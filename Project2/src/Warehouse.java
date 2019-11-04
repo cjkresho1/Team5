@@ -15,7 +15,7 @@ public class Warehouse
 	/**
 	 * All parts contained in the warehouse.
 	 */
-	private LinkedList<PartQuantity> parts;
+	public LinkedList<PartQuantity> parts;
 	
 	/**
 	 * Creates a new warehouse with the provided name.

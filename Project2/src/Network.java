@@ -435,14 +435,18 @@ public class Network {
 
 	public boolean quit(String filename) {
 		File file = new File(filename);
-		BikePart[] tempParts;
 		try {
 			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
-			tempParts = sortName("warehouse");
-			for (int i = 0; i < tempParts.length; i++) {
+			for (int i = 0; i < warehouse.parts.size(); i++) {
 				try {
-					BikePart tempPart = (BikePart) Array.get(tempParts, i);
-					bufferedWriter.write(tempPart.getName() + tempPart.getNum() + tempPart.getPrice() + tempPart.getSalePrice() + tempPart.isOnSale() + tempPart.getQuantity());
+					PartQuantity tempQuant = warehouse.parts.get(i);
+					BikePart tempPart = null;
+					for (int j = 0; j < parts.size(); j++) {
+						if (tempQuant.getName().equals(parts.get(j).getName())) {
+							tempPart = new BikePart(parts.get(j), tempQuant);
+						}
+					}
+					bufferedWriter.write(tempPart.toString());
 					bufferedWriter.newLine();
 				} catch (IllegalArgumentException e) {
 					e.printStackTrace();
@@ -452,12 +456,17 @@ public class Network {
 			}
 			for (int i = 0; i < vans.size(); i++) {
 				bufferedWriter.newLine();
-				tempParts = sortName(vans.get(i).getName());
 				bufferedWriter.write(vans.get(i).getName());
 				bufferedWriter.newLine();
-				for (int j = 0; j < tempParts.length; j++) {
-					BikePart tempPart = (BikePart) Array.get(tempParts, j);
-					bufferedWriter.write(tempPart.getName() + tempPart.getNum() + tempPart.getPrice() + tempPart.getSalePrice() + tempPart.isOnSale() + tempPart.getQuantity());
+				for (int j = 0; j < vans.get(i).parts.size(); j++) {
+					PartQuantity tempQuant = vans.get(i).parts.get(j);
+					BikePart tempPart = null;
+					for (int k = 0; k < parts.size(); k++) {
+						if (tempQuant.getName().equals(parts.get(j).getName())) {
+							tempPart = new BikePart(parts.get(j), tempQuant);
+						}
+					}
+					bufferedWriter.write(tempPart.toString());
 					bufferedWriter.newLine();
 				}
 			}

@@ -69,6 +69,7 @@ public class Runner
 			case 2: //Sell
 				System.out.println("Please enter a part number: ");
 				int partNum = scan.nextInt();
+				System.out.println("Please enter the target warehouse");
 				String temp = network.sell(partNum, scan.next());
 				if (!temp.contentEquals(""))
 				{
