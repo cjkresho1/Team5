@@ -123,10 +123,11 @@ public class Network {
 	 * @param partName part to return
 	 * @return part info, empty string (ie: "") if part cannot be found
 	 */
-	public PartInfo display(String partName) {
+	public String display(String partName) {
 		PartInfo newPart = null;
 		newPart = getPartFromDatabase(partName);
-		return newPart;
+		String returnPart = (newPart.getName() + newPart.getNum() + newPart.getPrice() + newPart.getSalePrice() + newPart.isOnSale());
+		return returnPart;
 	}
 
 	/**
