@@ -1,5 +1,6 @@
 import java.util.LinkedList;
 import java.util.Comparator;
+import java.util.Arrays;
 
 import java.lang.IllegalArgumentException;
 
@@ -174,31 +175,62 @@ public class Network {
 	 * @return a sorted array of parts by name
 	 */
 	public BikePart[] sortName(String warehouseSort) {
-		BikePart[] temp;
+		int i;
+		LinkedList<PartQuantity> sortedPartQuantities;
+		Warehouse sortedWarehouse = null;
+		BikePart[] sortedBikeParts = null;
 		
 		if (warehouseSort.equals("")) {
-			temp = new BikePart[parts.size()];
-		
-			for (int i = 0; i < parts.size(); i++)
-			{
-            temp[i] = new BikePart(parts.get(i), new PartQuantity(parts.get(i).getName(), parts.get(i).getNum(), 0));
+			i = 0;
+			sortedBikeParts = new BikePart[parts.size()];
+		} else {
+			i = 1;
+			for (int j = 0; j < vans.size(); j++) {
+				if (warehouseSort.equals(vans.get(j).getName())) {
+					sortedWarehouse = vans.get(j);
+					break;
+				}
 			}
 		}
-        
-        Warehouse warehouse = new Warehouse();
-        PartQuantity[] quantity= warehouse.sortName();
-
-        for (int i = 0; i < quantity.length; i++)
-        {
-            for (int j = 0; j < temp.length; j++)
-            {
-                if (temp[j].getName().equals(quantity[i].getName()))
-                {
-                    temp[j].setQuantity(temp[j].getQuantity() + quantity[i].getQuantity());
-                    break;
-                }
-            }
-        }
+		
+		if (i == 1) {
+			sortedPartQuantities = new LinkedList(Arrays.asList(sortedWarehouse.sortName()));
+			sortedBikeParts = new BikePart[sortedPartQuantities.size()];
+			for (int j = 0; j < sortedPartQuantities.size(); j++) {				
+				PartQuantity sortPart = sortedPartQuantities.get(j);
+				BikePart sortedBikePart = new BikePart(getPartFromDatabase(sortPart.getName()), sortPart);
+				sortedBikeParts[j] = sortedBikePart;				
+			}
+			return sortedBikeParts;
+		} else if (i == 0) {
+			LinkedList<PartQuantity> tempSortedPartQuantities = new LinkedList<>();
+			for (int j = 0; j < vans.size(); j++) {				
+				Warehouse currentWH = vans.get(j);
+				LinkedList<PartQuantity> warehouseSortedParts = new LinkedList(Arrays.asList(currentWH.sortName()));
+				for (int k = 0; k < warehouseSortedParts.size(); k++) {
+					tempSortedPartQuantities.add(warehouseSortedParts.get(k));
+				}
+			}
+			LinkedList<PartQuantity> warehouseSortedParts = new LinkedList(Arrays.asList(warehouse.sortName()));
+			for (int j = 0; j < warehouseSortedParts.size(); j++) {
+				tempSortedPartQuantities.add(warehouseSortedParts.get(j));
+			}
+			for (int j = 0; j < tempSortedPartQuantities.size(); j++) {
+				Warehouse tempWarehouse = new Warehouse("tempWarehouse");
+				tempWarehouse.add(tempSortedPartQuantities.get(j));
+				if (j == tempSortedPartQuantities.size() - 1) {
+					sortedPartQuantities = new LinkedList(Arrays.asList(tempWarehouse.sortName()));
+					sortedBikeParts = new BikePart[sortedPartQuantities.size()];
+					for (int k = 0; k < sortedPartQuantities.size(); k++) {
+						PartQuantity sortPart = sortedPartQuantities.get(k);
+						BikePart sortedBikePart = new BikePart(getPartFromDatabase(sortPart.getName()), sortPart);
+						sortedBikeParts[k] = sortedBikePart;
+					}
+					return sortedBikeParts;
+				}
+			}
+		}
+		return sortedBikeParts;
 	}
 
 	/**
