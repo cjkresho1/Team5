@@ -53,7 +53,7 @@ public class Network {
 	 */
 	public Network(String filename) throws FileNotFoundException {
 
-        File theFile = new File("db.txt");
+        File theFile = new File(filename);
         Scanner scanner = new Scanner(theFile);
         warehouse = new Warehouse(WAREHOUSE_NAME);
         vans = new LinkedList<Warehouse>();
@@ -62,7 +62,7 @@ public class Network {
         int counter = 0;
         while (scanner.hasNext()) {
             int i = 0;
-            master.set(i, scanner.nextLine());
+            master.add(scanner.nextLine());
             i++;
         }
         for (int i = 0; i < master.size(); i++) {
@@ -74,6 +74,7 @@ public class Network {
                             Double.parseDouble(toPlace[2]), Double.parseDouble(toPlace[3]),
                             Boolean.parseBoolean(toPlace[4]), Integer.parseInt(toPlace[5]));
                     warehouse.add(part);
+                    parts.add(new PartInfo(part));
                     i++;
 
                 } else {
@@ -91,7 +92,8 @@ public class Network {
                         BikePart part = new BikePart(toPlace[0], Integer.parseInt(toPlace[1]),
                                 Double.parseDouble(toPlace[2]), Double.parseDouble(toPlace[3]),
                                 Boolean.parseBoolean(toPlace[4]), Integer.parseInt(toPlace[5]));
-                        vans.get(i).add(part);
+                        vans.get(j).add(part);
+                        parts.add(new PartInfo(part));
                     }
                 }
 

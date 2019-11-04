@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -21,11 +22,12 @@ public class Runner
 	/**
 	 * Main method of the program. Loops over user input and output.
 	 * @param args CMD line arguments
+	 * @throws FileNotFoundException 
 	 */
-	public static void main(String[] args)
+	public static void main(String[] args) throws FileNotFoundException
 	{
 		//create new Warehouse from database file 
-		Network network = new Network();
+		Network network = new Network(WAREHOUSE_DB);
 		Scanner scan = new Scanner(System.in);
 		
 		//loop over user I/O process
