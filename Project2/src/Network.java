@@ -1,5 +1,4 @@
 import java.util.LinkedList;
-import java.util.Comparator;
 import java.util.Arrays;
 
 import java.lang.IllegalArgumentException;
@@ -7,6 +6,7 @@ import java.lang.IllegalArgumentException;
 import java.util.Scanner;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 /**
  * Simulates a network of a primary warehouse, and a fleet of vans.
@@ -61,13 +61,17 @@ public class Network {
 	 * @return true if the file is valid, false otherwise
 	 */
 	public boolean deliver(String filename) {
-		File inFile = new File(filename);
-		if (!inFile.exists()) {
-			return false;
+		Scanner scnr = null;
+		try {
+			File inFile = new File(filename);
+			if (!inFile.exists()) {
+				return false;
+			}
+
+			scnr = new Scanner(inFile);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
-
-		Scanner scnr = new Scanner(filename);
-
 		while (scnr.hasNext()) {
 			String[] partStuff = (scnr.next().split(","));
 			int newPartNum = Integer.parseInt(partStuff[1]);
@@ -317,7 +321,14 @@ public class Network {
 	 * @param filename name of transfer file
 	 */
 	public void transfer(String filename) {
-		Scanner scnr = new Scanner(filename);
+		Scanner scnr = null;
+		try {
+			File file = new File(filename);
+			scnr = new Scanner(file);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		String tempString = scnr.next();
 		String[] lineSplit = tempString.split(",");
 
